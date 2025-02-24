@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laʁs</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .block {
+            transition: transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="block cursor" draggable="false" style="height: 100%; width: 100%; background-color: transparent;"></div>
+
+    <div class="block box" draggable="true" style="top: 50px; left: 100px;">
+        <h2>Laʁs - Artist Website</h2>
+        <p>Bin ein kleiner Künstler (1.68m) und arbeite gerade an meinem kreativen Skillset.</p>
+    </div>
+
+    <div class="block box" draggable="true" style="top: 480px; left: 360px;">
+        <h3>About me:</h3>
+        <ul>
+            <li><img src="Assets/Bild.png" alt=""></li>
+            <li>24 Jahre</li>
+            <li>Student</li>
+            <li>Artist (Music, Film, Fotografie)</li>
+            <li>1,68</li>
+            <li>Unfassbar gutaussehend</li>
+        </ul>
+    </div>
+
+    <div class="block box" draggable="true" style="top: 210px; left: 100px;">
+        <h3>Musik:</h3>
+        <ul>
+            <li><a href="https://open.spotify.com/album/1Dj61MCdvQNq921uvujc2v?si=_FkStoMLRTijcN-SCz1c3A">Augen auf und durch Mixtape</a></li>
+            <li><a href="https://www.youtube.com/watch?v=dXS1Vcv6U-8">Es wird wieder Firsch</a></li>
+            <li><a href="https://www.youtube.com/watch?v=QzyJ_0bHCHY">Leben läuft (feat.)</a></li>
+            <li><a href="https://www.youtube.com/watch?v=S30JYxZbTnE&list=OLAK5uy_lm2TPeWZn5AtCl2YHT1ZGfUZShUDM0Ko8">Wie bisher (feat.)</a></li>
+        </ul>
+    </div>
+
+    <div class="block box" draggable="true" style="top: 420px; left: 670px;">
+        <h3>Sonstige Projekte:</h3>
+        <ul>
+            <li><a href="https://www.youtube.com/watch?v=fgpDVtZdC4U">life.mp4</a></li>
+            <li><a href="https://youtube.com/shorts/MCXfXad805g?si=PMZ2k3avO38syr_H">Motiondesign Loop</a></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="block box" draggable="true" style="top: 210px; left: 880px;">
+        <h3>Contact / Kanäle:</h3>
+        <ul>
+            <li><a href="mailto:lars.kaster@gmx.de">Email</a></li>
+            <li><a href="https://www.instagram.com/psychedelicpandemic/?hl=de">Instagram</a></li>
+            <li><a href="https://www.youtube.com/@larsmanstanding">YouTube</a></li>
+        </ul>
+    </div>
+
+
+    <div class="block box" draggable="true" style="top: 50px; left: 1000px;">
+        <h3><a href="datenschutz.html">Datenschutz</a></h3>
+    </div>
+    <div class="block box" draggable="true" style="top: 310px; left: 1170px;">
+        <h3>Fotogalerie:</h3>
+        <div class="gallery">
+            <button class="prev">&#10094;</button>
+            <img src="Assets/Bild2.png" class="active" alt="Bild 1">
+            <img src="Assets/Bild3.png" alt="Bild 2">
+            <img src="Assets/Bild4.png" alt="Bild 3">
+            <img src="Assets/Bild5.png" alt="Bild 4">
+            <img src="Assets/Bild6.jpg" alt="Bild 5">
+            <img src="Assets/Bild7.jpg" alt="Bild 6">
+            <img src="Assets/Bild8.jpg" alt="Bild 7">
+            <img src="Assets/Bild9.jpeg" alt="Bild 8">
+            <button class="next">&#10095;</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll(".gallery img");
+            const prevButton = document.querySelector(".gallery .prev");
+            const nextButton = document.querySelector(".gallery .next");
+            let currentIndex = 0;
+    
+            function updateGallery(index) {
+                images.forEach((img, i) => {
+                    img.classList.toggle("active", i === index);
+                });
+            }
+    
+            prevButton.addEventListener("click", function() {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateGallery(currentIndex);
+            });
+    
+            nextButton.addEventListener("click", function() {
+                currentIndex = (currentIndex + 1) % images.length;
+                updateGallery(currentIndex);
+            });
+    
+            images.forEach(img => {
+                img.addEventListener("click", function() {
+                    const fullscreenDiv = document.createElement("div");
+                    fullscreenDiv.classList.add("fullscreen");
+                    fullscreenDiv.innerHTML = `<img src="${img.src}" alt="Fullscreen Image">`;
+                    document.body.appendChild(fullscreenDiv);
+    
+                    fullscreenDiv.style.overflowY = "auto";
+                    fullscreenDiv.style.display = "flex";
+                    fullscreenDiv.style.alignItems = "center";
+                    fullscreenDiv.style.justifyContent = "center";
+                    fullscreenDiv.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+                    fullscreenDiv.style.position = "fixed";
+                    fullscreenDiv.style.top = "0";
+                    fullscreenDiv.style.left = "0";
+                    fullscreenDiv.style.width = "100vw";
+                    fullscreenDiv.style.height = "100vh";
+                    fullscreenDiv.style.zIndex = "1000";
+    
+                    const fullscreenImg = fullscreenDiv.querySelector("img");
+                    fullscreenImg.style.maxWidth = "90vw";
+                    fullscreenImg.style.maxHeight = "90vh";
+                    fullscreenImg.style.objectFit = "contain";
+    
+                    fullscreenDiv.addEventListener("click", function() {
+                        fullscreenDiv.remove();
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script>
+        const blocks = document.querySelectorAll('.block');
+        let currentDraggedElement = null;
+        let initialX, initialY;
+
+        blocks.forEach(block => {
+            block.addEventListener('dragstart', dragStart);
+            block.addEventListener('dragover', dragOver);
+            block.addEventListener('drop', drop);
+            block.dataset.x = block.offsetLeft;
+
+            const lockCheckbox = block.querySelector('.lock-checkbox input');
+            if (lockCheckbox) {
+                lockCheckbox.addEventListener('change', () => {
+                    block.classList.toggle('locked', lockCheckbox.checked);
+                });
+            }
+        });
+
+        document.getElementById('gravityBtn').addEventListener('click', applyGravity);
+
+        function dragStart(e) {
+            currentDraggedElement = e.target;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', null);
+            initialX = currentDraggedElement.offsetLeft;
+            initialY = currentDraggedElement.offsetTop;
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            const dropX = e.clientX;
+            const dropY = e.clientY;
+            const offsetX = dropX - initialX;
+            const offsetY = dropY - initialY;
+            currentDraggedElement.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            currentDraggedElement.dataset.x = currentDraggedElement.offsetLeft;
+        }
+
+        function applyGravity() {
+            blocks.forEach(block => {
+                if (!block.classList.contains('locked')) {
+                    const bottomPosition = window.innerHeight - block.offsetHeight;
+                    const offsetY = bottomPosition - block.offsetTop;
+                    block.style.transform = `translate(${block.dataset.x - block.offsetLeft}px, ${offsetY}px)`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
