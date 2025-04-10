@@ -1,233 +1,696 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laʁs</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Laʁs - Artist Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #5D36FF;
+            --secondary-color: #FF3366;
+            --accent-color: #36FFCC;
+            --dark-color: #222233;
+            --light-color: #F7F9FC;
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            --hover-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: linear-gradient(120deg, #f7f9fc 0%, #e6edff 100%);
+            padding: 20px;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            min-height: calc(100vh - 40px);
+        }
+        
         .block {
-            transition: transform 0.5s ease-in-out;
+            position: absolute;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+        
+        .box {
+            cursor: grab;
+            width: 300px;
+        }
+        
+        .box:hover {
+            box-shadow: var(--hover-shadow);
+            transform: translateY(-5px);
+        }
+        
+        .box:active {
+            cursor: grabbing;
+        }
+        
+        .box h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .box h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .box p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .box ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+        
+        .box ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .box ul li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+        
+        .box a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .box a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .cursor {
+            display: none;
+        }
+        
+        /* Box Styles */
+        .intro-box {
+            background: linear-gradient(to right, #ffffff, #f0f4ff);
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .about-box {
+            background: linear-gradient(to right, #ffffff, #fff0f4);
+            border-left: 5px solid var(--secondary-color);
+        }
+        
+        .music-box {
+            background: linear-gradient(to right, #ffffff, #f0fff4);
+            border-left: 5px solid var(--accent-color);
+        }
+        
+        .projects-box {
+            background: linear-gradient(to right, #ffffff, #fff8f0);
+            border-left: 5px solid #FF9900;
+        }
+        
+        .contact-box {
+            background: linear-gradient(to right, #ffffff, #f4f0ff);
+            border-left: 5px solid #9900FF;
+        }
+        
+        .privacy-box {
+            background: linear-gradient(to right, #ffffff, #f0faff);
+            border-left: 5px solid #00AAFF;
+        }
+        
+        .gallery-box {
+            background: linear-gradient(to right, #ffffff, #fff0fa);
+            border-left: 5px solid #FF00AA;
+        }
+        
+        /* Gallery */
+        .gallery {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            margin-top: 15px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .gallery img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .gallery img.active {
+            opacity: 1;
+        }
+        
+        .gallery button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .gallery button:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .gallery .prev {
+            left: 10px;
+        }
+        
+        .gallery .next {
+            right: 10px;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .box {
+                width: calc(100% - 40px);
+                position: relative !important;
+                top: 0 !important;
+                left: 0 !important;
+                margin-bottom: 20px;
+            }
+            
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 80px;
+            }
+            
+            .header {
+                width: calc(100% - 40px);
+                justify-content: center;
+            }
+        }
+        
+        /* Box accent colors */
+        .box:nth-of-type(1) { border-top: 4px solid var(--primary-color); }
+        .box:nth-of-type(2) { border-top: 4px solid var(--secondary-color); }
+        .box:nth-of-type(3) { border-top: 4px solid var(--accent-color); }
+        .box:nth-of-type(4) { border-top: 4px solid #FF9900; }
+        .box:nth-of-type(5) { border-top: 4px solid #9900FF; }
+        .box:nth-of-type(6) { border-top: 4px solid #00AAFF; }
+        .box:nth-of-type(7) { border-top: 4px solid #FF00AA; }
+        
+        /* Animated background */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: var(--primary-color);
+            top: 10%;
+            left: 5%;
+            animation-duration: 25s;
+        }
+        
+        .shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: var(--secondary-color);
+            bottom: 15%;
+            right: 10%;
+            animation-duration: 30s;
+            animation-delay: 2s;
+        }
+        
+        .shape:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            background: var(--accent-color);
+            bottom: 20%;
+            left: 20%;
+            animation-duration: 22s;
+            animation-delay: 1s;
+        }
+        
+        .shape:nth-child(4) {
+            width: 80px;
+            height: 80px;
+            background: #FF9900;
+            top: 30%;
+            right: 30%;
+            animation-duration: 18s;
+            animation-delay: 3s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-30px) translateX(20px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(20px) translateX(-20px) rotate(10deg);
+            }
+            75% {
+                transform: translateY(-20px) translateX(-30px) rotate(5deg);
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="block cursor" draggable="false" style="height: 100%; width: 100%; background-color: transparent;"></div>
-
-    <div class="block box" draggable="true" style="top: 50px; left: 100px;">
-        <h2>Laʁs - Artist Website</h2>
-        <p>Ich bin Lars, Grafikdesigner in Ausbildung. Mein Fokus liegt auf sinnstiftenden Projekten. Ich arbeite kreativ und strukturiert – von der ersten Idee bis zur Umsetzung. Ob visuelles Design oder konzeptuelles Denken: Ich versuche, gestalterisches Gespür mit unternehmerischem Blick zu verbinden. Am liebsten arbeite ich mit Menschen, die etwas bewegen wollen – sozial, kulturell, politisch oder ökologisch.</p>
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
     </div>
 
-    <div class="block box" draggable="true" style="top: 480px; left: 360px;">
-        <h3>About me:</h3>
-        <ul>
-            <li><img src="Assets/Bild.png" alt=""></li>
-            <li>Ich bin 24 Jahre alt</li>
-            <li>Design Student an der Mediauniversity in Berlin</li>
-            <li>Artist (Music, Film, Fotografie)</li>
-        </ul>
+    <div class="header">
+        <div class="logo">Laʁs</div>
+        <span>Portfolio</span>
     </div>
 
-    <div class="block box" draggable="true" style="top: 210px; left: 100px;">
-        <h3>Musik:</h3>
-        <ul>
-            <li><a href="https://open.spotify.com/album/1Dj61MCdvQNq921uvujc2v?si=_FkStoMLRTijcN-SCz1c3A">Augen auf und durch Mixtape</a></li>
-            <li><a href="https://www.youtube.com/watch?v=dXS1Vcv6U-8">Es wird wieder Firsch</a></li>
-            <li><a href="https://www.youtube.com/watch?v=QzyJ_0bHCHY">Leben läuft (feat.)</a></li>
-            <li><a href="https://www.youtube.com/watch?v=S30JYxZbTnE&list=OLAK5uy_lm2TPeWZn5AtCl2YHT1ZGfUZShUDM0Ko8">Wie bisher (feat.)</a></li>
-        </ul>
-    </div>
+    <div class="container" id="container">
+        <div class="block cursor" draggable="false" style="height: 100%; width: 100%; background-color: transparent;"></div>
 
-    <div class="block box" draggable="true" style="top: 420px; left: 670px;">
-        <h3>Sonstige Projekte:</h3>
-        <ul>
-            <li><a href="https://youtu.be/Vr6uZ7TBBnw">Dexter Intro Reconstruction</a></li>
-            <li><a href="https://www.youtube.com/watch?v=fgpDVtZdC4U">life.mp4</a></li>
-            <li><a href="https://youtube.com/shorts/MCXfXad805g?si=PMZ2k3avO38syr_H">Motiondesign Loop</a></li>
-            <li><a href="https://www.youtube.com/watch?v=EKa0ukdN2P8">Campus WG</a></li
-            <li><a href:"https://www.youtube.com/watch?v=wZPYAOzWaY4">Lovely Day Kurzfilm</a></li>
-        </ul>
-    </div>
+        <div class="block box intro-box" draggable="true" data-index="0">
+            <h2>Laʁs - Artist Website</h2>
+            <p>Ich bin Lars, Grafikdesigner in Ausbildung. Mein Fokus liegt auf sinnstiftenden Projekten. Ich arbeite kreativ und strukturiert – von der ersten Idee bis zur Umsetzung. Ob visuelles Design oder konzeptuelles Denken: Ich versuche, gestalterisches Gespür mit unternehmerischem Blick zu verbinden. Am liebsten arbeite ich mit Menschen, die etwas bewegen wollen – sozial, kulturell, politisch oder ökologisch.</p>
+        </div>
 
-    <div class="block box" draggable="true" style="top: 210px; left: 880px;">
-        <h3>Contact / Kanäle:</h3>
-        <ul>
-            <li><a href="mailto:lars.kaster@gmx.de">Email</a></li>
-            <li><a href="https://www.instagram.com/psychedelicpandemic/?hl=de">Instagram</a></li>
-            <li><a href="https://www.youtube.com/@larsmanstanding">YouTube</a></li>
-        </ul>
-    </div>
+        <div class="block box about-box" draggable="true" data-index="1">
+            <h3>About me:</h3>
+            <ul>
+                <li><img src="Assets/Bild.png" alt="Profilbild" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';"></li>
+                <li>Ich bin 24 Jahre alt</li>
+                <li>Design Student an der Mediauniversity in Berlin</li>
+                <li>Artist (Music, Film, Fotografie)</li>
+            </ul>
+        </div>
 
+        <div class="block box music-box" draggable="true" data-index="2">
+            <h3>Musik:</h3>
+            <ul>
+                <li><a href="https://open.spotify.com/album/1Dj61MCdvQNq921uvujc2v?si=_FkStoMLRTijcN-SCz1c3A" target="_blank">Augen auf und durch Mixtape</a></li>
+                <li><a href="https://www.youtube.com/watch?v=dXS1Vcv6U-8" target="_blank">Es wird wieder Firsch</a></li>
+                <li><a href="https://www.youtube.com/watch?v=QzyJ_0bHCHY" target="_blank">Leben läuft (feat.)</a></li>
+                <li><a href="https://www.youtube.com/watch?v=S30JYxZbTnE&list=OLAK5uy_lm2TPeWZn5AtCl2YHT1ZGfUZShUDM0Ko8" target="_blank">Wie bisher (feat.)</a></li>
+            </ul>
+        </div>
 
-    <div class="block box" draggable="true" style="top: 50px; left: 1000px;">
-        <h3><a href="datenschutz.html">Datenschutz</a></h3>
-    </div>
-    <div class="block box" draggable="true" style="top: 310px; left: 1170px;">
-        <h3>Fotogalerie:</h3>
-        <div class="gallery">
-            <button class="prev">&#10094;</button>
-            <img src="Assets/Bild2.png" class="active" alt="Bild 1">
-            <img src="Assets/Bild3.png" alt="Bild 2">
-            <img src="Assets/Bild4.png" alt="Bild 3">
-            <img src="Assets/Bild5.png" alt="Bild 4">
-            <img src="Assets/Bild6.jpg" alt="Bild 5">
-            <img src="Assets/Bild7.jpg" alt="Bild 6">
-            <img src="Assets/Bild8.jpg" alt="Bild 7">
-            <img src="Assets/Bild9.jpeg" alt="Bild 8">
-            <button class="next">&#10095;</button>
+        <div class="block box projects-box" draggable="true" data-index="3">
+            <h3>Sonstige Projekte:</h3>
+            <ul>
+                <li><a href="https://youtu.be/Vr6uZ7TBBnw" target="_blank">Dexter Intro Reconstruction</a></li>
+                <li><a href="https://www.youtube.com/watch?v=fgpDVtZdC4U" target="_blank">life.mp4</a></li>
+                <li><a href="https://youtube.com/shorts/MCXfXad805g?si=PMZ2k3avO38syr_H" target="_blank">Motiondesign Loop</a></li>
+                <li><a href="https://www.youtube.com/watch?v=EKa0ukdN2P8" target="_blank">Campus WG</a></li>
+                <li><a href="https://www.youtube.com/watch?v=wZPYAOzWaY4" target="_blank">Lovely Day Kurzfilm</a></li>
+            </ul>
+        </div>
+
+        <div class="block box contact-box" draggable="true" data-index="4">
+            <h3>Contact / Kanäle:</h3>
+            <ul>
+                <li><a href="mailto:lars.kaster@gmx.de"><i class="fas fa-envelope"></i> Email</a></li>
+                <li><a href="https://www.instagram.com/psychedelicpandemic/?hl=de" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="https://www.youtube.com/@larsmanstanding" target="_blank"><i class="fab fa-youtube"></i> YouTube</a></li>
+            </ul>
+        </div>
+
+        <div class="block box privacy-box" draggable="true" data-index="5">
+            <h3><a href="datenschutz.html">Datenschutz</a></h3>
+        </div>
+        
+        <div class="block box gallery-box" draggable="true" data-index="6">
+            <h3>Fotogalerie:</h3>
+            <div class="gallery">
+                <button class="prev">&#10094;</button>
+                <img src="Assets/Bild2.png" class="active" alt="Bild 1" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
+                <img src="Assets/Bild3.png" alt="Bild 2" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
+                <img src="Assets/Bild4.png" alt="Bild 3" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
+                <img src="Assets/Bild5.png" alt="Bild 4" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
+                <img src="Assets/Bild6.jpg" alt="Bild 5" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
+                <img src="Assets/Bild7.jpg" alt="Bild 6" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
+                <img src="Assets/Bild8.jpg" alt="Bild 7" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
+                <img src="Assets/Bild9.jpeg" alt="Bild 8" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
+                <button class="next">&#10095;</button>
+            </div>
         </div>
     </div>
-    
-    <script>
-            window.onload = function () {
-        const container = document.createElement('div');
-        container.style.display = 'flex';
-        container.style.alignItems = 'flex-start';
-        container.style.gap = '20px';
-        container.style.padding = '20px';
-        document.body.innerHTML = ''; // Seite leeren
-        document.body.appendChild(container);
-
-        const columnCount = 3;
-        const columns = [];
-
-        for (let i = 0; i < columnCount; i++) {
-            const col = document.createElement('div');
-            col.style.flex = '1';
-            col.style.display = 'flex';
-            col.style.flexDirection = 'column';
-            col.style.gap = '20px';
-            columns.push(col);
-            container.appendChild(col);
-        }
-
-        const boxes = Array.from(document.querySelectorAll('.box'));
-
-        boxes.forEach((box, index) => {
-            box.style.width = '100%';
-            box.style.position = 'relative';
-            const shortestColumn = columns.reduce((prev, curr) => {
-                return prev.scrollHeight < curr.scrollHeight ? prev : curr;
-            });
-            shortestColumn.appendChild(box);
-        });
-
-        // Optional: restliche Blöcke wie .cursor hinzufügen
-        const staticBlocks = Array.from(document.querySelectorAll('.block:not(.box)'));
-        staticBlocks.forEach(block => document.body.appendChild(block));
-    };
-
-    </script>
 
     <script>
-        const blocks = document.querySelectorAll('.block');
-        let currentDraggedElement = null;
-        let initialX, initialY;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gallery functionality
+            const gallery = document.querySelector('.gallery');
+            const prevBtn = gallery.querySelector('.prev');
+            const nextBtn = gallery.querySelector('.next');
+            const images = gallery.querySelectorAll('img');
+            let currentIndex = 0;
 
-        blocks.forEach(block => {
-            block.addEventListener('dragstart', dragStart);
-            block.addEventListener('dragover', dragOver);
-            block.addEventListener('drop', drop);
-            block.dataset.x = block.offsetLeft;
+            function showImage(index) {
+                images.forEach(img => img.classList.remove('active'));
+                currentIndex = (index + images.length) % images.length;
+                images[currentIndex].classList.add('active');
+            }
 
-            const lockCheckbox = block.querySelector('.lock-checkbox input');
-            if (lockCheckbox) {
-                lockCheckbox.addEventListener('change', () => {
-                    block.classList.toggle('locked', lockCheckbox.checked);
+            prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
+            nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
+
+            // Auto-rotate gallery
+            setInterval(() => showImage(currentIndex + 1), 5000);
+            
+            // Drag and drop functionality
+            const boxes = document.querySelectorAll('.box');
+            const container = document.getElementById('container');
+            const containerRect = container.getBoundingClientRect();
+            let activeBox = null;
+            let initialX, initialY;
+            let offsetX, offsetY;
+            
+            // Initial positioning logic
+            function arrangeBoxes() {
+                const margin = 20;
+                const containerWidth = containerRect.width - margin * 2;
+                const containerHeight = containerRect.height - margin * 2;
+                
+                // Define grid dimensions
+                const cols = Math.min(Math.floor(containerWidth / 340), 4);
+                const cellWidth = containerWidth / cols;
+                const cellHeight = 280;
+                
+                boxes.forEach((box, index) => {
+                    const col = index % cols;
+                    const row = Math.floor(index / cols);
+                    
+                    const left = margin + col * cellWidth + Math.random() * 30;
+                    const top = margin + row * cellHeight + Math.random() * 30;
+                    
+                    box.style.left = `${left}px`;
+                    box.style.top = `${top}px`;
+                    
+                    // Add transitions for smooth repositioning
+                    box.style.transition = 'left 0.5s ease, top 0.5s ease';
+                    setTimeout(() => {
+                        box.style.transition = '';
+                    }, 500);
                 });
             }
-        });
-
-        document.getElementById('gravityBtn').addEventListener('click', applyGravity);
-
-        function dragStart(e) {
-            currentDraggedElement = e.target;
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/plain', null);
-            initialX = currentDraggedElement.offsetLeft;
-            initialY = currentDraggedElement.offsetTop;
-        }
-
-        function dragOver(e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-        }
-
-        function drop(e) {
-            e.preventDefault();
-            const dropX = e.clientX;
-            const dropY = e.clientY;
-            const boxWidth = currentDraggedElement.offsetWidth;
-            const boxHeight = currentDraggedElement.offsetHeight;
-        
-            let newX = dropX;
-            let newY = dropY;
-        
-            // Überprüft Kollision mit anderen Boxen
-            function isColliding(x, y) {
-                return Array.from(document.querySelectorAll('.box')).some(box => {
-                    if (box === currentDraggedElement) return false;
-                    const rect = box.getBoundingClientRect();
-                    return !(
-                        x + boxWidth < rect.left ||
-                        x > rect.right ||
-                        y + boxHeight < rect.top ||
-                        y > rect.bottom
-                    );
-                });
-            }
-        
-            // Solange Kollision besteht, versetze die Box nach unten
-            while (isColliding(newX, newY)) {
-                newY += 50; // Verschiebe in 20px Schritten nach unten
-                if (newY + boxHeight > window.innerHeight) {
-                    newY = 0;
-                    newX += 50;
-                }
-            }
-        
-            currentDraggedElement.style.transform = 'none';
-            currentDraggedElement.style.left = newX + 'px';
-            currentDraggedElement.style.top = newY + 'px';
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const boxes = Array.from(document.querySelectorAll('.box'));
-            const placed = [];
-    
-            boxes.forEach(box => {
-                let left = parseInt(box.style.left || 0);
-                let top = parseInt(box.style.top || 0);
-                const width = box.offsetWidth;
-                const height = box.offsetHeight;
-    
-                function isOverlapping(x, y) {
-                    return placed.some(other => {
-                        return !(
-                            x + width < other.x ||
-                            x > other.x + other.width ||
-                            y + height < other.y ||
-                            y > other.y + other.height
-                        );
-                    });
-                }
-    
-                while (isOverlapping(left, top)) {
-                    top += 20;
-                    if (top + height > window.innerHeight) {
-                        top = 0;
-                        left += 20;
+            
+            // Check for collisions and adjust position
+            function checkCollision(box) {
+                const boxRect = box.getBoundingClientRect();
+                let moveAmount = {x: 0, y: 0};
+                
+                boxes.forEach(otherBox => {
+                    if (otherBox !== box) {
+                        const otherRect = otherBox.getBoundingClientRect();
+                        
+                        // Check if boxes overlap
+                        if (!(boxRect.right < otherRect.left || 
+                              boxRect.left > otherRect.right || 
+                              boxRect.bottom < otherRect.top || 
+                              boxRect.top > otherRect.bottom)) {
+                            
+                            // Calculate overlap
+                            const overlapX = Math.min(boxRect.right - otherRect.left, otherRect.right - boxRect.left);
+                            const overlapY = Math.min(boxRect.bottom - otherRect.top, otherRect.bottom - boxRect.top);
+                            
+                            // Adjust based on smallest overlap
+                            if (overlapX < overlapY) {
+                                if (boxRect.left < otherRect.left) {
+                                    moveAmount.x -= overlapX;
+                                } else {
+                                    moveAmount.x += overlapX;
+                                }
+                            } else {
+                                if (boxRect.top < otherRect.top) {
+                                    moveAmount.y -= overlapY;
+                                } else {
+                                    moveAmount.y += overlapY;
+                                }
+                            }
+                        }
                     }
+                });
+                
+                // Apply calculated movement
+                const currentLeft = parseInt(box.style.left || '0');
+                const currentTop = parseInt(box.style.top || '0');
+                
+                box.style.left = `${currentLeft + moveAmount.x}px`;
+                box.style.top = `${currentTop + moveAmount.y}px`;
+                
+                // Keep box within container
+                keepInBounds(box);
+                
+                // If we made adjustments, check again for new collisions
+                if (Math.abs(moveAmount.x) > 0 || Math.abs(moveAmount.y) > 0) {
+                    setTimeout(() => checkCollision(box), 50);
                 }
-    
-                box.style.left = `${left}px`;
-                box.style.top = `${top}px`;
-                placed.push({ x: left, y: top, width, height });
+            }
+            
+            // Keep boxes within container boundaries
+            function keepInBounds(box) {
+                const rect = box.getBoundingClientRect();
+                const boxWidth = rect.width;
+                const boxHeight = rect.height;
+                
+                let leftPos = parseInt(box.style.left);
+                let topPos = parseInt(box.style.top);
+                
+                // Adjust if out of bounds
+                if (leftPos < 0) leftPos = 0;
+                if (topPos < 0) topPos = 0;
+                if (leftPos + boxWidth > containerRect.width) {
+                    leftPos = containerRect.width - boxWidth;
+                }
+                if (topPos + boxHeight > containerRect.height) {
+                    topPos = containerRect.height - boxHeight;
+                }
+                
+                box.style.left = `${leftPos}px`;
+                box.style.top = `${topPos}px`;
+            }
+            
+            // Initialize dragging events
+            boxes.forEach(box => {
+                // Mouse events
+                box.addEventListener('mousedown', startDrag);
+                
+                // Touch events for mobile
+                box.addEventListener('touchstart', startDragTouch, { passive: false });
             });
+            
+            function startDrag(e) {
+                e.preventDefault();
+                activeBox = this;
+                initialX = e.clientX;
+                initialY = e.clientY;
+                
+                const rect = activeBox.getBoundingClientRect();
+                offsetX = initialX - rect.left;
+                offsetY = initialY - rect.top;
+                
+                // Increase z-index when dragging
+                activeBox.style.zIndex = "100";
+                
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', stopDrag);
+            }
+            
+            function startDragTouch(e) {
+                e.preventDefault();
+                activeBox = this;
+                initialX = e.touches[0].clientX;
+                initialY = e.touches[0].clientY;
+                
+                const rect = activeBox.getBoundingClientRect();
+                offsetX = initialX - rect.left;
+                offsetY = initialY - rect.top;
+                
+                // Increase z-index when dragging
+                activeBox.style.zIndex = "100";
+                
+                document.addEventListener('touchmove', dragTouch, { passive: false });
+                document.addEventListener('touchend', stopDragTouch);
+                document.addEventListener('touchcancel', stopDragTouch);
+            }
+            
+            function drag(e) {
+                if (activeBox) {
+                    e.preventDefault();
+                    
+                    const x = e.clientX - offsetX;
+                    const y = e.clientY - offsetY;
+                    
+                    activeBox.style.left = `${x}px`;
+                    activeBox.style.top = `${y}px`;
+                }
+            }
+            
+            function dragTouch(e) {
+                if (activeBox) {
+                    e.preventDefault();
+                    
+                    const x = e.touches[0].clientX - offsetX;
+                    const y = e.touches[0].clientY - offsetY;
+                    
+                    activeBox.style.left = `${x}px`;
+                    activeBox.style.top = `${y}px`;
+                }
+            }
+            
+            function stopDrag() {
+                if (activeBox) {
+                    // Reset z-index
+                    activeBox.style.zIndex = "1";
+                    
+                    // Check for collisions
+                    checkCollision(activeBox);
+                    activeBox = null;
+                    
+                    document.removeEventListener('mousemove', drag);
+                    document.removeEventListener('mouseup', stopDrag);
+                }
+            }
+            
+            function stopDragTouch() {
+                if (activeBox) {
+                    // Reset z-index
+                    activeBox.style.zIndex = "1";
+                    
+                    // Check for collisions
+                    checkCollision(activeBox);
+                    activeBox = null;
+                    
+                    document.removeEventListener('touchmove', dragTouch);
+                    document.removeEventListener('touchend', stopDragTouch);
+                    document.removeEventListener('touchcancel', stopDragTouch);
+                }
+            }
+            
+            // Layout boxes initially
+            window.addEventListener('resize', function() {
+                // Update container dimensions on resize
+                const newRect = container.getBoundingClientRect();
+                containerRect.width = newRect.width;
+                containerRect.height = newRect.height;
+                
+                // Rearrange boxes
+                arrangeBoxes();
+            });
+            
+            // Initialize layout
+            arrangeBoxes();
+            
+            // Responsive behavior for mobile
+            function checkMobile() {
+                const isMobile = window.innerWidth <= 768;
+                
+                boxes.forEach(box => {
+                    if (isMobile) {
+                        box.setAttribute('draggable', 'false');
+                        box.style.cursor = 'default';
+                    } else {
+                        box.setAttribute('draggable', 'true');
+                        box.style.cursor = 'grab';
+                    }
+                });
+            }
+            
+            // Check initial state and on resize
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
         });
-</script>
-
+    </script>
 </body>
 </html>
