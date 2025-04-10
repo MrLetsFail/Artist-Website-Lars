@@ -81,51 +81,29 @@
     </div>
     
     <script>
-        window.onload = function () {
-        const boxes = Array.from(document.querySelectorAll('.box'));
-        const placed = [];
+            window.onload = function () {
+        const container = document.createElement('div');
+        container.style.columnCount = 3; // Anzahl Spalten
+        container.style.columnGap = '20px';
+        container.style.padding = '20px';
+        document.body.innerHTML = ''; // Seite leeren
+        document.body.appendChild(container);
 
-        let currentX = 50;
-        let currentY = 50;
-        const spacing = 20;
+        const boxes = Array.from(document.querySelectorAll('.box'));
 
         boxes.forEach(box => {
-            const width = box.offsetWidth;
-            const height = box.offsetHeight;
-
-            function isOverlapping(x, y) {
-                return placed.some(other => {
-                    return !(
-                        x + width < other.x ||
-                        x > other.x + other.width ||
-                        y + height < other.y ||
-                        y > other.y + other.height
-                    );
-                });
-            }
-
-            let x = currentX;
-            let y = currentY;
-
-            // Suche freie Position
-            while (isOverlapping(x, y)) {
-                y += spacing;
-                if (y + height > window.innerHeight) {
-                    y = 0;
-                    x += spacing;
-                }
-            }
-
-            box.style.position = 'absolute'; // zur Sicherheit
-            box.style.left = `${x}px`;
-            box.style.top = `${y}px`;
-
-            placed.push({ x, y, width, height });
-
-            // nächste Box startet grob daneben
-            currentY = y + height + spacing;
+            box.style.position = 'relative';
+            box.style.display = 'inline-block';
+            box.style.width = '100%'; // Passt sich Spalte an
+            box.style.marginBottom = '20px';
+            container.appendChild(box);
         });
+
+        // Optional: restliche Blöcke wie .cursor hinzufügen
+        const staticBlocks = Array.from(document.querySelectorAll('.block:not(.box)'));
+        staticBlocks.forEach(block => document.body.appendChild(block));
     };
+
     </script>
 
     <script>
