@@ -81,40 +81,51 @@
     </div>
     
     <script>
-    window.onload = function () {
-            const boxes = Array.from(document.querySelectorAll('.box'));
-            const placed = [];
-    
-            boxes.forEach(box => {
-                let left = parseInt(box.style.left || 0);
-                let top = parseInt(box.style.top || 0);
-                const width = box.offsetWidth;
-                const height = box.offsetHeight;
-    
-                function isOverlapping(x, y) {
-                    return placed.some(other => {
-                        return !(
-                            x + width < other.x ||
-                            x > other.x + other.width ||
-                            y + height < other.y ||
-                            y > other.y + other.height
-                        );
-                    });
+        window.onload = function () {
+        const boxes = Array.from(document.querySelectorAll('.box'));
+        const placed = [];
+
+        let currentX = 50;
+        let currentY = 50;
+        const spacing = 20;
+
+        boxes.forEach(box => {
+            const width = box.offsetWidth;
+            const height = box.offsetHeight;
+
+            function isOverlapping(x, y) {
+                return placed.some(other => {
+                    return !(
+                        x + width < other.x ||
+                        x > other.x + other.width ||
+                        y + height < other.y ||
+                        y > other.y + other.height
+                    );
+                });
+            }
+
+            let x = currentX;
+            let y = currentY;
+
+            // Suche freie Position
+            while (isOverlapping(x, y)) {
+                y += spacing;
+                if (y + height > window.innerHeight) {
+                    y = 0;
+                    x += spacing;
                 }
-    
-                while (isOverlapping(left, top)) {
-                    top += 20;
-                    if (top + height > window.innerHeight) {
-                        top = 0;
-                        left += 20;
-                    }
-                }
-    
-                box.style.left = `${left}px`;
-                box.style.top = `${top}px`;
-                placed.push({ x: left, y: top, width, height });
-            });
-        };
+            }
+
+            box.style.position = 'absolute'; // zur Sicherheit
+            box.style.left = `${x}px`;
+            box.style.top = `${y}px`;
+
+            placed.push({ x, y, width, height });
+
+            // nächste Box startet grob daneben
+            currentY = y + height + spacing;
+        });
+    };
     </script>
 
     <script>
