@@ -155,10 +155,12 @@
             object-fit: cover;
             opacity: 0;
             transition: opacity 0.5s ease;
+            pointer-events: none
         }
-        
+
         .gallery img.active {
             opacity: 1;
+            pointer-events: auto;
         }
         
         .gallery button {
@@ -329,7 +331,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             display: none;
             align-items: center;
             justify-content: center;
@@ -343,6 +345,38 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             transition: transform 0.3s ease;
         }
+        
+        .lightbox-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 10000;
+            border-radius: 50%;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .lightbox-button.prev {
+            left: 30px;
+        }
+        
+        .lightbox-button.next {
+            right: 30px;
+        }
+
 
     </style>
 </head>
@@ -703,19 +737,49 @@
         // Lightbox logic
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = lightbox.querySelector('img');
+        const prevBtn = lightbox.querySelector('.prev');
+        const nextBtn = lightbox.querySelector('.next');
+        const galleryImages = Array.from(document.querySelectorAll('.gallery img'));
         
-        document.querySelectorAll('.gallery img').forEach(img => {
+        let currentFullscreenIndex = 0;
+        
+        // Open lightbox on image click
+        galleryImages.forEach((img, index) => {
             img.addEventListener('click', () => {
-                lightboxImg.src = img.src;
-                lightbox.style.display = 'flex';
+                currentFullscreenIndex = index;
+                showFullscreenImage(currentFullscreenIndex);
             });
         });
         
+        function showFullscreenImage(index) {
+            lightboxImg.src = galleryImages[index].src;
+            lightbox.style.display = 'flex';
+        }
+        
+        // Navigation
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentFullscreenIndex = (currentFullscreenIndex - 1 + galleryImages.length) % galleryImages.length;
+            showFullscreenImage(currentFullscreenIndex);
+        });
+        
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentFullscreenIndex = (currentFullscreenIndex + 1) % galleryImages.length;
+            showFullscreenImage(currentFullscreenIndex);
+        });
+        
+        // Close lightbox on click outside image
         lightbox.addEventListener('click', () => {
             lightbox.style.display = 'none';
         });
         
-        // ESC key to close lightbox
+        // Prevent closing when clicking on image or buttons
+        lightboxImg.addEventListener('click', e => e.stopPropagation());
+        prevBtn.addEventListener('click', e => e.stopPropagation());
+        nextBtn.addEventListener('click', e => e.stopPropagation());
+        
+        // Close with ESC key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 lightbox.style.display = 'none';
@@ -723,8 +787,12 @@
         });
 
     </script>
+    
     <div class="lightbox-overlay" id="lightbox">
+        <button class="lightbox-button prev">&#10094;</button>
         <img src="" alt="Fullscreen Image">
+        <button class="lightbox-button next">&#10095;</button>
     </div>
+
 </body>
 </html>
