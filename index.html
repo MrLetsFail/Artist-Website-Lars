@@ -173,11 +173,75 @@
             e.preventDefault();
             const dropX = e.clientX;
             const dropY = e.clientY;
-            const offsetX = dropX - initialX;
-            const offsetY = dropY - initialY;
-            currentDraggedElement.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-            currentDraggedElement.dataset.x = currentDraggedElement.offsetLeft;
+            const boxWidth = currentDraggedElement.offsetWidth;
+            const boxHeight = currentDraggedElement.offsetHeight;
+        
+            let newX = dropX;
+            let newY = dropY;
+        
+            // Überprüft Kollision mit anderen Boxen
+            function isColliding(x, y) {
+                return Array.from(document.querySelectorAll('.box')).some(box => {
+                    if (box === currentDraggedElement) return false;
+                    const rect = box.getBoundingClientRect();
+                    return !(
+                        x + boxWidth < rect.left ||
+                        x > rect.right ||
+                        y + boxHeight < rect.top ||
+                        y > rect.bottom
+                    );
+                });
+            }
+        
+            // Solange Kollision besteht, versetze die Box nach unten
+            while (isColliding(newX, newY)) {
+                newY += 20; // Verschiebe in 20px Schritten nach unten
+                if (newY + boxHeight > window.innerHeight) {
+                    newY = 0;
+                    newX += 20;
+                }
+            }
+        
+            currentDraggedElement.style.transform = 'none';
+            currentDraggedElement.style.left = newX + 'px';
+            currentDraggedElement.style.top = newY + 'px';
         }
-    </script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const boxes = Array.from(document.querySelectorAll('.box'));
+            const placed = [];
+    
+            boxes.forEach(box => {
+                let left = parseInt(box.style.left || 0);
+                let top = parseInt(box.style.top || 0);
+                const width = box.offsetWidth;
+                const height = box.offsetHeight;
+    
+                function isOverlapping(x, y) {
+                    return placed.some(other => {
+                        return !(
+                            x + width < other.x ||
+                            x > other.x + other.width ||
+                            y + height < other.y ||
+                            y > other.y + other.height
+                        );
+                    });
+                }
+    
+                while (isOverlapping(left, top)) {
+                    top += 20;
+                    if (top + height > window.innerHeight) {
+                        top = 0;
+                        left += 20;
+                    }
+                }
+    
+                box.style.left = `${left}px`;
+                box.style.top = `${top}px`;
+                placed.push({ x: left, y: top, width, height });
+            });
+        });
+</script>
+
 </body>
 </html>
