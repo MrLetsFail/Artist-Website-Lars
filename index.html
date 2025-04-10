@@ -81,58 +81,40 @@
     </div>
     
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const images = document.querySelectorAll(".gallery img");
-            const prevButton = document.querySelector(".gallery .prev");
-            const nextButton = document.querySelector(".gallery .next");
-            let currentIndex = 0;
+    window.onload = function () {
+            const boxes = Array.from(document.querySelectorAll('.box'));
+            const placed = [];
     
-            function updateGallery(index) {
-                images.forEach((img, i) => {
-                    img.classList.toggle("active", i === index);
-                });
-            }
+            boxes.forEach(box => {
+                let left = parseInt(box.style.left || 0);
+                let top = parseInt(box.style.top || 0);
+                const width = box.offsetWidth;
+                const height = box.offsetHeight;
     
-            prevButton.addEventListener("click", function() {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                updateGallery(currentIndex);
-            });
-    
-            nextButton.addEventListener("click", function() {
-                currentIndex = (currentIndex + 1) % images.length;
-                updateGallery(currentIndex);
-            });
-    
-            images.forEach(img => {
-                img.addEventListener("click", function() {
-                    const fullscreenDiv = document.createElement("div");
-                    fullscreenDiv.classList.add("fullscreen");
-                    fullscreenDiv.innerHTML = `<img src="${img.src}" alt="Fullscreen Image">`;
-                    document.body.appendChild(fullscreenDiv);
-    
-                    fullscreenDiv.style.overflowY = "auto";
-                    fullscreenDiv.style.display = "flex";
-                    fullscreenDiv.style.alignItems = "center";
-                    fullscreenDiv.style.justifyContent = "center";
-                    fullscreenDiv.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-                    fullscreenDiv.style.position = "fixed";
-                    fullscreenDiv.style.top = "0";
-                    fullscreenDiv.style.left = "0";
-                    fullscreenDiv.style.width = "100vw";
-                    fullscreenDiv.style.height = "100vh";
-                    fullscreenDiv.style.zIndex = "1000";
-    
-                    const fullscreenImg = fullscreenDiv.querySelector("img");
-                    fullscreenImg.style.maxWidth = "90vw";
-                    fullscreenImg.style.maxHeight = "90vh";
-                    fullscreenImg.style.objectFit = "contain";
-    
-                    fullscreenDiv.addEventListener("click", function() {
-                        fullscreenDiv.remove();
+                function isOverlapping(x, y) {
+                    return placed.some(other => {
+                        return !(
+                            x + width < other.x ||
+                            x > other.x + other.width ||
+                            y + height < other.y ||
+                            y > other.y + other.height
+                        );
                     });
-                });
+                }
+    
+                while (isOverlapping(left, top)) {
+                    top += 20;
+                    if (top + height > window.innerHeight) {
+                        top = 0;
+                        left += 20;
+                    }
+                }
+    
+                box.style.left = `${left}px`;
+                box.style.top = `${top}px`;
+                placed.push({ x: left, y: top, width, height });
             });
-        });
+        };
     </script>
 
     <script>
@@ -195,10 +177,10 @@
         
             // Solange Kollision besteht, versetze die Box nach unten
             while (isColliding(newX, newY)) {
-                newY += 20; // Verschiebe in 20px Schritten nach unten
+                newY += 50; // Verschiebe in 20px Schritten nach unten
                 if (newY + boxHeight > window.innerHeight) {
                     newY = 0;
-                    newX += 20;
+                    newX += 50;
                 }
             }
         
