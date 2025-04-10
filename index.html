@@ -745,7 +745,10 @@
         
         // Open lightbox on image click
         galleryImages.forEach((img, index) => {
-            img.addEventListener('click', () => {
+            img.addEventListener('click', (e) => {
+                e.preventDefault();       // verhindert Drag & Co.
+                e.stopPropagation();      // verhindert, dass das Event zur Box weitergeht
+        
                 currentFullscreenIndex = index;
                 showFullscreenImage(currentFullscreenIndex);
             });
