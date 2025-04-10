@@ -83,20 +83,35 @@
     <script>
             window.onload = function () {
         const container = document.createElement('div');
-        container.style.columnCount = 3; // Anzahl Spalten
-        container.style.columnGap = '20px';
+        container.style.display = 'flex';
+        container.style.alignItems = 'flex-start';
+        container.style.gap = '20px';
         container.style.padding = '20px';
         document.body.innerHTML = ''; // Seite leeren
         document.body.appendChild(container);
 
+        const columnCount = 3;
+        const columns = [];
+
+        for (let i = 0; i < columnCount; i++) {
+            const col = document.createElement('div');
+            col.style.flex = '1';
+            col.style.display = 'flex';
+            col.style.flexDirection = 'column';
+            col.style.gap = '20px';
+            columns.push(col);
+            container.appendChild(col);
+        }
+
         const boxes = Array.from(document.querySelectorAll('.box'));
 
-        boxes.forEach(box => {
+        boxes.forEach((box, index) => {
+            box.style.width = '100%';
             box.style.position = 'relative';
-            box.style.display = 'inline-block';
-            box.style.width = '100%'; // Passt sich Spalte an
-            box.style.marginBottom = '20px';
-            container.appendChild(box);
+            const shortestColumn = columns.reduce((prev, curr) => {
+                return prev.scrollHeight < curr.scrollHeight ? prev : curr;
+            });
+            shortestColumn.appendChild(box);
         });
 
         // Optional: restliche Blöcke wie .cursor hinzufügen
