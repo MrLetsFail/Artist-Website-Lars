@@ -447,19 +447,25 @@
                 boxes.forEach((box, index) => {
                     const col = index % cols;
                     const row = Math.floor(index / cols);
-                    
+                
+                    let extraTop = 0;
+                
+                    // Versatz für Kontakt und Datenschutz Boxen
+                    if (index === 4) extraTop = 80;  // contact-box
+                    if (index === 5) extraTop = 80;  // privacy-box
+                
                     const left = margin + col * cellWidth + Math.random() * 30;
-                    const top = margin + row * cellHeight + Math.random() * 30;
-                    
+                    const top = margin + row * cellHeight + Math.random() * 30 + extraTop;
+                
                     box.style.left = `${left}px`;
                     box.style.top = `${top}px`;
-                    
-                    // Add transitions for smooth repositioning
+                
                     box.style.transition = 'left 0.5s ease, top 0.5s ease';
                     setTimeout(() => {
                         box.style.transition = '';
                     }, 500);
                 });
+
             }
             
             // Check for collisions and adjust position
