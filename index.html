@@ -420,6 +420,38 @@
             height: 100%;
             border-radius: 10px;
         }
+        
+        /* Form feedback styling */
+        .form-feedback {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .form-feedback.success {
+            background-color: rgba(0, 230, 195, 0.2);
+            color: var(--accent-turquoise);
+            border: 1px solid var(--accent-turquoise);
+        }
+        
+        .form-feedback.error {
+            background-color: rgba(255, 87, 150, 0.2);
+            color: var(--accent-pink);
+            border: 1px solid var(--accent-pink);
+        }
+        
+        /* Form validation styling */
+        input.error, textarea.error {
+            border-color: var(--accent-pink) !important;
+        }
+        
+        .error-message {
+            color: var(--accent-pink);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -533,7 +565,7 @@
     </section>
     
     <!-- Parallax Section 1 -->
-    <section class="parallax" style="background-image: url('https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/abstract-dark-bg.jpg');">
+    <section class="parallax" style="background-image: url('https://images.unsplash.com/photo-1557682250-33bd709cbe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1429&q=80');">
         <div class="parallax-overlay"></div>
         <div class="parallax-content">
             <h2 class="text-4xl font-bold mb-4">Kreativität kennt keine Grenzen</h2>
@@ -562,7 +594,7 @@
                 <!-- Augen auf und durch Mixtape -->
                 <div class="card card-pink-hover">
                     <div class="media-card">
-                        <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/music-player-dark.jpg" alt="Augen auf und durch Mixtape">
+                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Augen auf und durch Mixtape">
                         <div class="overlay">
                             <a href="https://open.spotify.com/intl-de/album/1Dj61MCdvQNq921uvujc2v?si=_FkStoMLRTijcN-SCz1c3A&nd=1&dlsi=587e74392c5845fe" target="_blank" class="btn btn-outline-pink">Auf Spotify hören</a>
                         </div>
@@ -614,7 +646,7 @@
     </section>
     
     <!-- Parallax Section 2 -->
-    <section class="parallax" style="background-image: url('https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/film-production-dark.jpg');">
+    <section class="parallax" style="background-image: url('https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');">
         <div class="parallax-overlay"></div>
         <div class="parallax-content">
             <h2 class="text-4xl font-bold mb-4">Visuelle Geschichten</h2>
@@ -812,7 +844,7 @@
     </section>
     
     <!-- Parallax Section 3 -->
-    <section class="parallax" style="background-image: url('https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-work-dark.jpg');">
+    <section class="parallax" style="background-image: url('https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');">
         <div class="parallax-overlay"></div>
         <div class="parallax-content">
             <h2 class="text-4xl font-bold mb-4">Visuelle Impressionen</h2>
@@ -826,24 +858,24 @@
             <h2 class="text-3xl section-title accent-turquoise">Bildergalerie</h2>
             
             <div class="gallery">
-                <!-- Placeholder gallery items -->
+                <!-- Gallery items with reliable image URLs -->
                 <div class="gallery-item">
-                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-1.jpg" alt="Design Work">
+                    <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Design Work">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-2.jpg" alt="Design Work">
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Design Work">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-3.jpg" alt="Design Work">
+                    <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Design Work">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-4.jpg" alt="Design Work">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Design Work">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-5.jpg" alt="Design Work">
+                    <img src="https://images.unsplash.com/photo-1618331835717-801e976710b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1450&q=80" alt="Design Work">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-6.jpg" alt="Design Work">
+                    <img src="https://images.unsplash.com/photo-1618556450994-a6a128ef0d9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1464&q=80" alt="Design Work">
                 </div>
             </div>
             
@@ -892,20 +924,27 @@
                     <div class="card p-6">
                         <h3 class="text-xl font-semibold mb-6">Kontaktformular</h3>
                         
-                        <form>
+                        <div id="form-feedback" class="form-feedback">
+                            <p id="feedback-message"></p>
+                        </div>
+                        
+                        <form id="contact-form">
                             <div class="mb-4">
                                 <label for="name" class="block mb-2">Name</label>
-                                <input type="text" id="name" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);">
+                                <input type="text" id="name" name="name" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);" required>
+                                <p class="error-message" id="name-error">Bitte gib deinen Namen ein.</p>
                             </div>
                             
                             <div class="mb-4">
                                 <label for="email" class="block mb-2">Email</label>
-                                <input type="email" id="email" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);">
+                                <input type="email" id="email" name="email" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);" required>
+                                <p class="error-message" id="email-error">Bitte gib eine gültige E-Mail-Adresse ein.</p>
                             </div>
                             
                             <div class="mb-4">
                                 <label for="message" class="block mb-2">Nachricht</label>
-                                <textarea id="message" rows="5" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);"></textarea>
+                                <textarea id="message" name="message" rows="5" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);" required></textarea>
+                                <p class="error-message" id="message-error">Bitte gib eine Nachricht ein.</p>
                             </div>
                             
                             <button type="submit" class="btn btn-outline-turquoise w-full">Nachricht senden</button>
@@ -928,6 +967,7 @@
         </div>
     </footer>
     
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
     <script>
         // Navigation scroll behavior
         const navbar = document.querySelector('.navbar');
@@ -979,13 +1019,131 @@
             });
         });
         
-        // Simple form validation (demonstration purposes)
-        const contactForm = document.querySelector('form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Danke für deine Nachricht! Dies ist nur eine Demo - das Formular ist nicht funktional.');
+        // Function to validate form
+        function validateForm() {
+            let isValid = true;
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            
+            // Reset previous error states
+            document.getElementById('name-error').style.display = 'none';
+            document.getElementById('email-error').style.display = 'none';
+            document.getElementById('message-error').style.display = 'none';
+            nameInput.classList.remove('error');
+            emailInput.classList.remove('error');
+            messageInput.classList.remove('error');
+            
+            // Validate name
+            if (nameInput.value.trim() === '') {
+                document.getElementById('name-error').style.display = 'block';
+                nameInput.classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value.trim())) {
+                document.getElementById('email-error').style.display = 'block';
+                emailInput.classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate message
+            if (messageInput.value.trim() === '') {
+                document.getElementById('message-error').style.display = 'block';
+                messageInput.classList.add('error');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        // Initialize EmailJS with your public key
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init("YOUR_PUBLIC_KEY");
+        })();
+        
+        // Contact form submission
+        const contactForm = document.getElementById('contact-form');
+        const formFeedback = document.getElementById('form-feedback');
+        const feedbackMessage = document.getElementById('feedback-message');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+            
+            // For demonstration purposes, we'll simulate a successful form submission
+            // In a real implementation, you would use EmailJS or a backend service
+            
+            // Simulating form submission
+            setTimeout(function() {
+                formFeedback.className = 'form-feedback success';
+                formFeedback.style.display = 'block';
+                feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
+                contactForm.reset();
+                
+                // Hide the success message after 5 seconds
+                setTimeout(function() {
+                    formFeedback.style.display = 'none';
+                }, 5000);
+            }, 1000);
+            
+           //* Uncomment this for actual EmailJS implementation *//
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+            
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    formFeedback.className = 'form-feedback success';
+                    formFeedback.style.display = 'block';
+                    feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
+                    contactForm.reset();
+                    
+                    setTimeout(function() {
+                        formFeedback.style.display = 'none';
+                    }, 5000);
+                }, function(error) {
+                    formFeedback.className = 'form-feedback error';
+                    formFeedback.style.display = 'block';
+                    feedbackMessage.textContent = 'Es gab ein Problem beim Senden deiner Nachricht. Bitte versuche es später erneut.';
+                    
+                    setTimeout(function() {
+                        formFeedback.style.display = 'none';
+                    }, 5000);
+                });
+            
+        });
+        
+        // Parallax effect for modern browsers
+        function handleParallax() {
+            const parallaxElements = document.querySelectorAll('.parallax');
+            
+            parallaxElements.forEach(element => {
+                const scrollPosition = window.pageYOffset;
+                const elementPosition = element.offsetTop;
+                const distance = scrollPosition - elementPosition;
+                
+                if (Math.abs(distance) < window.innerHeight) {
+                    const parallaxSpeed = 0.5;
+                    const yPos = -(distance * parallaxSpeed);
+                    element.style.backgroundPositionY = `calc(50% + ${yPos}px)`;
+                }
             });
+        }
+        
+        // Add parallax effect if not on mobile
+        if (window.innerWidth > 768) {
+            window.addEventListener('scroll', handleParallax);
+            // Initialize on page load
+            handleParallax();
         }
     </script>
 </body>
