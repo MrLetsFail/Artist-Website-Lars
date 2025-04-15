@@ -3,799 +3,982 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laʁs - Artist Portfolio</title>
+    <title>Lars - Grafikdesigner Portfolio</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-        
         :root {
-            --primary-color: #5D36FF;
-            --secondary-color: #FF3366;
-            --accent-color: #36FFCC;
-            --dark-color: #222233;
-            --light-color: #F7F9FC;
-            --box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            --hover-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            --dark-gray: #121212;
+            --medium-gray: #1e1e1e;
+            --light-gray: #2d2d2d;
+            --text-light: #f5f5f5;
+            --accent-pink: #ff5796;
+            --accent-turquoise: #00e6c3;
+            --accent-yellow: #ffdf3c;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-color);
-            color: var(--dark-color);
-            min-height: 100vh;
-            overflow-x: hidden;
-            background: linear-gradient(120deg, #f7f9fc 0%, #e6edff 100%);
-            padding: 20px;
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 600;
-        }
-        
-        .container {
-            position: relative;
-            width: 100%;
-            min-height: calc(100vh - 40px);
-        }
-        
-        .block {
-            position: absolute;
-            border-radius: 15px;
-            background-color: white;
-            box-shadow: var(--box-shadow);
-            padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            z-index: 1;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            overflow: hidden;
-        }
-        
-        .box {
-            cursor: grab;
-            width: 300px;
-        }
-        
-        .box:hover {
-            box-shadow: var(--hover-shadow);
-            transform: translateY(-5px);
-        }
-        
-        .box:active {
-            cursor: grabbing;
-        }
-        
-        .box h2 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-        
-        .box h3 {
-            color: var(--secondary-color);
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .box p {
-            margin-bottom: 15px;
+            background-color: var(--dark-gray);
+            color: var(--text-light);
             line-height: 1.6;
         }
         
-        .box ul {
-            list-style: none;
-            padding-left: 5px;
-        }
-        
-        .box ul li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .box ul li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--secondary-color);
-        }
-        
-        .box a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-        
-        .box a:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-        
-        .cursor {
-            display: none;
-        }
-        
-        /* Box Styles */
-        
-        .intro-box    { border-left: 5px solid rgba(93, 54, 255, 0.4); } 
-        .about-box    { border-left: 5px solid rgba(255, 51, 102, 0.4); } 
-        .music-box    { border-left: 5px solid rgba(54, 255, 204, 0.4); } 
-        .projects-box { border-left: 5px solid rgba(255, 153, 0, 0.4); }
-        .contact-box  { border-left: 5px solid rgba(153, 0, 255, 0.4); }
-        .privacy-box  { border-left: 5px solid rgba(0, 170, 255, 0.4); }
-        .gallery-box  { border-left: 5px solid rgba(255, 0, 170, 0.4); }
-
-        
-        /* Gallery */
-        .gallery {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            margin-top: 15px;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-        
-        .gallery img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none
-        }
-
-        .gallery img.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        
-        .gallery button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.7);
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
-        }
-        
-        .gallery button:hover {
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        .gallery .prev {
-            left: 10px;
-        }
-        
-        .gallery .next {
-            right: 10px;
-        }
-        
-        /* Header */
-        .header {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.8);
+        .navbar {
+            background-color: rgba(18, 18, 18, 0.9);
             backdrop-filter: blur(10px);
-            padding: 10px 20px;
-            border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-right: 20px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .box {
-                width: calc(100% - 40px);
-                position: relative !important;
-                top: 0 !important;
-                left: 0 !important;
-                margin-bottom: 20px;
-            }
-            
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding-top: 80px;
-            }
-            
-            .header {
-                width: calc(100% - 40px);
-                justify-content: center;
-            }
-        }
-        
-        /*
-        Box accent colors 
-        .box:nth-of-type(1) { border-top: 4px solid var(--primary-color); }
-        .box:nth-of-type(2) { border-top: 4px solid var(--secondary-color); }
-        .box:nth-of-type(3) { border-top: 4px solid var(--accent-color); }
-        .box:nth-of-type(4) { border-top: 4px solid #FF9900; }
-        .box:nth-of-type(5) { border-top: 4px solid #9900FF; }
-        .box:nth-of-type(6) { border-top: 4px solid #00AAFF; }
-        .box:nth-of-type(7) { border-top: 4px solid #FF00AA; }
-        */
-        
-        /* Animated background */
-        .bg-shapes {
             position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+        }
+        
+        .accent-pink::after {
+            background-color: var(--accent-pink);
+        }
+        
+        .accent-turquoise::after {
+            background-color: var(--accent-turquoise);
+        }
+        
+        .accent-yellow::after {
+            background-color: var(--accent-yellow);
+        }
+        
+        .hero {
+            height: 100vh;
+            background-color: var(--dark-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-bg {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            background: linear-gradient(135deg, rgba(255, 87, 150, 0.1), rgba(0, 230, 195, 0.1));
+        }
+        
+        .hero-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
         }
         
-        .shape {
+        .hero-shape {
             position: absolute;
-            opacity: 0.1;
             border-radius: 50%;
-            animation: float 20s infinite ease-in-out;
+            filter: blur(80px);
+            opacity: 0.3;
         }
         
-        .shape:nth-child(1) {
+        .shape-1 {
+            top: 20%;
+            left: 15%;
             width: 300px;
             height: 300px;
-            background: var(--primary-color);
-            top: 10%;
-            left: 5%;
-            animation-duration: 25s;
+            background-color: var(--accent-pink);
+            animation: float 15s ease-in-out infinite;
         }
         
-        .shape:nth-child(2) {
+        .shape-2 {
+            bottom: 10%;
+            right: 10%;
+            width: 250px;
+            height: 250px;
+            background-color: var(--accent-turquoise);
+            animation: float 18s ease-in-out infinite reverse;
+        }
+        
+        .shape-3 {
+            top: 50%;
+            right: 30%;
             width: 200px;
             height: 200px;
-            background: var(--secondary-color);
-            bottom: 15%;
-            right: 10%;
-            animation-duration: 30s;
-            animation-delay: 2s;
-        }
-        
-        .shape:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            background: var(--accent-color);
-            bottom: 20%;
-            left: 20%;
-            animation-duration: 22s;
-            animation-delay: 1s;
-        }
-        
-        .shape:nth-child(4) {
-            width: 80px;
-            height: 80px;
-            background: #FF9900;
-            top: 30%;
-            right: 30%;
-            animation-duration: 18s;
-            animation-delay: 3s;
+            background-color: var(--accent-yellow);
+            animation: float 20s ease-in-out infinite;
         }
         
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-30px) translateX(20px) rotate(5deg);
-            }
-            50% {
-                transform: translateY(20px) translateX(-20px) rotate(10deg);
-            }
-            75% {
-                transform: translateY(-20px) translateX(-30px) rotate(5deg);
-            }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, 30px) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
-
-        /* Lightbox Styles */
         
-        .lightbox-overlay {
+        .card {
+            background-color: var(--medium-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card-pink-hover:hover {
+            box-shadow: 0 10px 30px rgba(255, 87, 150, 0.3);
+        }
+        
+        .card-turquoise-hover:hover {
+            box-shadow: 0 10px 30px rgba(0, 230, 195, 0.3);
+        }
+        
+        .card-yellow-hover:hover {
+            box-shadow: 0 10px 30px rgba(255, 223, 60, 0.3);
+        }
+        
+        .media-card {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .media-card img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.3s ease;
+        }
+        
+        .media-card:hover img {
+            filter: brightness(0.7);
+        }
+        
+        .media-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .media-card:hover .overlay {
+            opacity: 1;
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            height: 300px;
+        }
+        
+        .parallax-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        .parallax-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(18, 18, 18, 0.7);
+        }
+        
+        .skill-bar {
+            background-color: var(--light-gray);
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .skill-progress-pink {
+            background-color: var(--accent-pink);
+        }
+        
+        .skill-progress-turquoise {
+            background-color: var(--accent-turquoise);
+        }
+        
+        .skill-progress-yellow {
+            background-color: var(--accent-yellow);
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link-pink {
+            background-color: rgba(255, 87, 150, 0.2);
+            color: var(--accent-pink);
+        }
+        
+        .social-link-pink:hover {
+            background-color: var(--accent-pink);
+            color: white;
+        }
+        
+        .social-link-turquoise {
+            background-color: rgba(0, 230, 195, 0.2);
+            color: var(--accent-turquoise);
+        }
+        
+        .social-link-turquoise:hover {
+            background-color: var(--accent-turquoise);
+            color: white;
+        }
+        
+        .social-link-yellow {
+            background-color: rgba(255, 223, 60, 0.2);
+            color: var(--accent-yellow);
+        }
+        
+        .social-link-yellow:hover {
+            background-color: var(--accent-yellow);
+            color: black;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-outline-pink {
+            border: 2px solid var(--accent-pink);
+            color: var(--accent-pink);
+        }
+        
+        .btn-outline-pink:hover {
+            background-color: var(--accent-pink);
+            color: white;
+        }
+        
+        .btn-outline-turquoise {
+            border: 2px solid var(--accent-turquoise);
+            color: var(--accent-turquoise);
+        }
+        
+        .btn-outline-turquoise:hover {
+            background-color: var(--accent-turquoise);
+            color: white;
+        }
+        
+        .btn-outline-yellow {
+            border: 2px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+        
+        .btn-outline-yellow:hover {
+            background-color: var(--accent-yellow);
+            color: black;
+        }
+        
+        /* For the mobile navigation */
+        .mobile-menu {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
-            display: none;
-            align-items: center;
+            background-color: var(--dark-gray);
+            z-index: 1001;
+            flex-direction: column;
             justify-content: center;
-            z-index: 9999;
+            align-items: center;
         }
         
-        .lightbox-overlay img {
-            max-width: 90%;
-            max-height: 90%;
+        .mobile-menu a {
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .about-image {
+                margin-bottom: 2rem;
+            }
+        }
+        
+        /* Gallery styling */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            position: relative;
+            height: 200px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.3s ease;
         }
         
-        .lightbox-button {
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Extra styles for embeds */
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        
+        .embed-container iframe {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            z-index: 10000;
-            border-radius: 50%;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
         }
-        
-        .lightbox-button:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-        
-        .lightbox-button.prev {
-            left: 30px;
-        }
-        
-        .lightbox-button.next {
-            right: 30px;
-        }
-
-
     </style>
 </head>
 <body>
-    <div class="bg-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
+    <!-- Navigation -->
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold">Lars<span class="text-accent-turquoise" style="color: var(--accent-turquoise);">.</span></a>
+            
+            <div class="navbar-links hidden md:flex">
+                <a href="#about" class="mx-4 hover:text-accent-pink transition-colors" style="color: var(--text-light); hover:color: var(--accent-pink);">Über mich</a>
+                <a href="#music" class="mx-4 hover:text-accent-turquoise transition-colors" style="color: var(--text-light);">Musik</a>
+                <a href="#films" class="mx-4 hover:text-accent-yellow transition-colors" style="color: var(--text-light);">Filme</a>
+                <a href="#skills" class="mx-4 hover:text-accent-pink transition-colors" style="color: var(--text-light);">Fähigkeiten</a>
+                <a href="#gallery" class="mx-4 hover:text-accent-turquoise transition-colors" style="color: var(--text-light);">Galerie</a>
+                <a href="#contact" class="mx-4 hover:text-accent-yellow transition-colors" style="color: var(--text-light);">Kontakt</a>
+            </div>
+            
+            <button class="mobile-menu-btn md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="#about" class="hover:text-accent-pink transition-colors">Über mich</a>
+        <a href="#music" class="hover:text-accent-turquoise transition-colors">Musik</a>
+        <a href="#films" class="hover:text-accent-yellow transition-colors">Filme</a>
+        <a href="#skills" class="hover:text-accent-pink transition-colors">Fähigkeiten</a>
+        <a href="#gallery" class="hover:text-accent-turquoise transition-colors">Galerie</a>
+        <a href="#contact" class="hover:text-accent-yellow transition-colors">Kontakt</a>
+        
+        <button class="mt-6 close-menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
     </div>
-
-    <div class="header">
-        <div class="logo">Laʁs</div>
-        <span>Portfolio</span>
-    </div>
-
-    <div class="container" id="container">
-        <div class="block cursor" draggable="false" style="height: 100%; width: 100%; background-color: transparent;"></div>
-
-        <div class="block box intro-box" draggable="true" data-index="0">
-            <h2>Laʁs - Artist Website</h2>
-            <p>Ich bin Lars, Grafikdesigner in Ausbildung. Mein Fokus liegt auf sinnstiftenden Projekten. Ich arbeite kreativ und strukturiert – von der ersten Idee bis zur Umsetzung. Ob visuelles Design oder konzeptuelles Denken: Ich versuche, gestalterisches Gespür mit unternehmerischem Blick zu verbinden. Am liebsten arbeite ich mit Menschen, die etwas bewegen wollen – sozial, kulturell, politisch oder ökologisch.</p>
-        </div>
-
-        <div class="block box about-box" draggable="true" data-index="1">
-            <h3>About me:</h3>
-            <ul>
-                <li><img src="Assets/Bild.png" alt="Profilbild" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';"></li>
-                <li>Ich bin 24 Jahre alt</li>
-                <li>Design Student an der Mediauniversity in Berlin</li>
-                <li>Artist (Music, Film, Fotografie)</li>
-            </ul>
-        </div>
-
-        <div class="block box music-box" draggable="true" data-index="2">
-            <h3>Musik:</h3>
-            <ul>
-                <li><a href="https://open.spotify.com/album/1Dj61MCdvQNq921uvujc2v?si=_FkStoMLRTijcN-SCz1c3A" target="_blank">Augen auf und durch Mixtape</a></li>
-                <li><a href="https://www.youtube.com/watch?v=dXS1Vcv6U-8" target="_blank">Es wird wieder Firsch</a></li>
-                <li><a href="https://www.youtube.com/watch?v=QzyJ_0bHCHY" target="_blank">Leben läuft (feat.)</a></li>
-                <li><a href="https://www.youtube.com/watch?v=S30JYxZbTnE&list=OLAK5uy_lm2TPeWZn5AtCl2YHT1ZGfUZShUDM0Ko8" target="_blank">Wie bisher (feat.)</a></li>
-            </ul>
-        </div>
-
-        <div class="block box projects-box" draggable="true" data-index="3">
-            <h3>Sonstige Projekte:</h3>
-            <ul>
-                <li><a href="https://youtu.be/Vr6uZ7TBBnw" target="_blank">Dexter Intro Reconstruction</a></li>
-                <li><a href="https://www.youtube.com/watch?v=fgpDVtZdC4U" target="_blank">life.mp4</a></li>
-                <li><a href="https://youtube.com/shorts/MCXfXad805g?si=PMZ2k3avO38syr_H" target="_blank">Motiondesign Loop</a></li>
-                <li><a href="https://www.youtube.com/watch?v=EKa0ukdN2P8" target="_blank">Campus WG</a></li>
-                <li><a href="https://www.youtube.com/watch?v=wZPYAOzWaY4" target="_blank">Lovely Day Kurzfilm</a></li>
-                <li><a href="https://youtu.be/8bxDIuxjnoI" target="_blank">Gefängnisvibes Musikvideo</a></li>
-            </ul>
-        </div>
-
-        <div class="block box contact-box" draggable="true" data-index="4">
-            <h3>Contact / Kanäle:</h3>
-            <ul>
-                <li><a href="mailto:lars.kaster@gmx.de"><i class="fas fa-envelope"></i> Email</a></li>
-                <li><a href="https://www.instagram.com/psychedelicpandemic/?hl=de" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
-                <li><a href="https://www.youtube.com/@larsmanstanding" target="_blank"><i class="fab fa-youtube"></i> YouTube</a></li>
-            </ul>
-        </div>
-
-        <div class="block box privacy-box" draggable="true" data-index="5">
-            <h3><a href="datenschutz.html">Datenschutz</a></h3>
+    
+    <!-- Hero Section -->
+    <section class="hero flex items-center">
+        <div class="hero-bg"></div>
+        <div class="hero-shapes">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+            <div class="hero-shape shape-3"></div>
         </div>
         
-        <div class="block box gallery-box" draggable="true" data-index="6">
-            <h3>Fotogalerie:</h3>
-            <div class="gallery">
-                <button class="prev">&#10094;</button>
-                <img src="Assets/Bild2.png" class="active" alt="Bild 1" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
-                <img src="Assets/Bild3.png" alt="Bild 2" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
-                <img src="Assets/Bild4.png" alt="Bild 3" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
-                <img src="Assets/Bild5.png" alt="Bild 4" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
-                <img src="Assets/Bild6.jpg" alt="Bild 5" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
-                <img src="Assets/Bild7.jpg" alt="Bild 6" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
-                <img src="Assets/Bild8.jpg" alt="Bild 7" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
-                <img src="Assets/Bild9.jpeg" alt="Bild 8" onerror="this.src='https://cdn.jsdelivr.net/gh/identicons/identicons@0.4.0/avatars/random.svg';">
-                <button class="next">&#10095;</button>
+        <div class="container mx-auto px-4 hero-content">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">Hallo, ich bin <span style="color: var(--accent-pink);">Lars</span></h1>
+            <h2 class="text-2xl md:text-3xl mb-8">Grafikdesigner in Ausbildung</h2>
+            <div class="flex flex-wrap gap-4">
+                <a href="#about" class="btn btn-outline-pink">Mehr über mich</a>
+                <a href="#contact" class="btn btn-outline-turquoise">Kontakt</a>
             </div>
         </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Gallery functionality
-            const gallery = document.querySelector('.gallery');
-            const prevBtn = gallery.querySelector('.prev');
-            const nextBtn = gallery.querySelector('.next');
-            const images = gallery.querySelectorAll('img');
-            let currentIndex = 0;
-
-            function showImage(index) {
-                images.forEach(img => img.classList.remove('active'));
-                currentIndex = (index + images.length) % images.length;
-                images[currentIndex].classList.add('active');
-            }
-
-            prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
-            nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
-
-            // Auto-rotate gallery
-            setInterval(() => showImage(currentIndex + 1), 5000);
-            
-            // Drag and drop functionality
-            const boxes = document.querySelectorAll('.box');
-            const container = document.getElementById('container');
-            const containerRect = container.getBoundingClientRect();
-            let activeBox = null;
-            let initialX, initialY;
-            let offsetX, offsetY;
-            
-            // Initial positioning logic
-            function arrangeBoxes() {
-                const margin = 20;
-                const containerWidth = containerRect.width - margin * 2;
-                const containerHeight = containerRect.height - margin * 2;
-                
-                // Define grid dimensions
-                const cols = Math.min(Math.floor(containerWidth / 340), 4);
-                const cellWidth = containerWidth / cols;
-                const cellHeight = 280;
-                
-                boxes.forEach((box, index) => {
-                    const col = index % cols;
-                    const row = Math.floor(index / cols);
-                
-                    let extraTop = 0;
-                
-                    // Versatz für Kontakt und Datenschutz Boxen
-                    if (index === 4) extraTop = 260;  // contact-box
-                    if (index === 5) extraTop = 340;  // privacy-box
-                
-                    const left = margin + col * cellWidth + Math.random() * 30;
-                    const top = margin + row * cellHeight + Math.random() * 30 + extraTop;
-                
-                    box.style.left = `${left}px`;
-                    box.style.top = `${top}px`;
-                
-                    box.style.transition = 'left 0.5s ease, top 0.5s ease';
-                    setTimeout(() => {
-                        box.style.transition = '';
-                    }, 500);
-                });
-
-            }
-            
-            // Check for collisions and adjust position
-            function checkCollision(box) {
-                const boxRect = box.getBoundingClientRect();
-                let moveAmount = {x: 0, y: 0};
-                
-                boxes.forEach(otherBox => {
-                    if (otherBox !== box) {
-                        const otherRect = otherBox.getBoundingClientRect();
-                        
-                        // Check if boxes overlap
-                        if (!(boxRect.right < otherRect.left || 
-                              boxRect.left > otherRect.right || 
-                              boxRect.bottom < otherRect.top || 
-                              boxRect.top > otherRect.bottom)) {
-                            
-                            // Calculate overlap
-                            const overlapX = Math.min(boxRect.right - otherRect.left, otherRect.right - boxRect.left);
-                            const overlapY = Math.min(boxRect.bottom - otherRect.top, otherRect.bottom - boxRect.top);
-                            
-                            // Adjust based on smallest overlap
-                            if (overlapX < overlapY) {
-                                if (boxRect.left < otherRect.left) {
-                                    moveAmount.x -= overlapX;
-                                } else {
-                                    moveAmount.x += overlapX;
-                                }
-                            } else {
-                                if (boxRect.top < otherRect.top) {
-                                    moveAmount.y -= overlapY;
-                                } else {
-                                    moveAmount.y += overlapY;
-                                }
-                            }
-                        }
-                    }
-                });
-                
-                // Apply calculated movement
-                const currentLeft = parseInt(box.style.left || '0');
-                const currentTop = parseInt(box.style.top || '0');
-                
-                box.style.left = `${currentLeft + moveAmount.x}px`;
-                box.style.top = `${currentTop + moveAmount.y}px`;
-                
-                // Keep box within container
-                keepInBounds(box);
-                
-                // If we made adjustments, check again for new collisions
-                if (Math.abs(moveAmount.x) > 0 || Math.abs(moveAmount.y) > 0) {
-                    setTimeout(() => checkCollision(box), 50);
-                }
-            }
-            
-            // Keep boxes within container boundaries
-            function keepInBounds(box) {
-                const rect = box.getBoundingClientRect();
-                const boxWidth = rect.width;
-                const boxHeight = rect.height;
-                
-                let leftPos = parseInt(box.style.left);
-                let topPos = parseInt(box.style.top);
-                
-                // Adjust if out of bounds
-                if (leftPos < 0) leftPos = 0;
-                if (topPos < 0) topPos = 0;
-                if (leftPos + boxWidth > containerRect.width) {
-                    leftPos = containerRect.width - boxWidth;
-                }
-                if (topPos + boxHeight > containerRect.height) {
-                    topPos = containerRect.height - boxHeight;
-                }
-                
-                box.style.left = `${leftPos}px`;
-                box.style.top = `${topPos}px`;
-            }
-            
-            // Initialize dragging events
-            boxes.forEach(box => {
-                // Mouse events
-                box.addEventListener('mousedown', startDrag);
-                
-                // Touch events for mobile
-                box.addEventListener('touchstart', startDragTouch, { passive: false });
-            });
-            
-            function startDrag(e) {
-                e.preventDefault();
-                activeBox = this;
-                initialX = e.clientX;
-                initialY = e.clientY;
-                
-                const rect = activeBox.getBoundingClientRect();
-                offsetX = initialX - rect.left;
-                offsetY = initialY - rect.top;
-                
-                // Increase z-index when dragging
-                activeBox.style.zIndex = "100";
-                
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('mouseup', stopDrag);
-            }
-            
-            function startDragTouch(e) {
-                e.preventDefault();
-                activeBox = this;
-                initialX = e.touches[0].clientX;
-                initialY = e.touches[0].clientY;
-                
-                const rect = activeBox.getBoundingClientRect();
-                offsetX = initialX - rect.left;
-                offsetY = initialY - rect.top;
-                
-                // Increase z-index when dragging
-                activeBox.style.zIndex = "100";
-                
-                document.addEventListener('touchmove', dragTouch, { passive: false });
-                document.addEventListener('touchend', stopDragTouch);
-                document.addEventListener('touchcancel', stopDragTouch);
-            }
-            
-            function drag(e) {
-                if (activeBox) {
-                    e.preventDefault();
-                    
-                    const x = e.clientX - offsetX;
-                    const y = e.clientY - offsetY;
-                    
-                    activeBox.style.left = `${x}px`;
-                    activeBox.style.top = `${y}px`;
-                }
-            }
-            
-            function dragTouch(e) {
-                if (activeBox) {
-                    e.preventDefault();
-                    
-                    const x = e.touches[0].clientX - offsetX;
-                    const y = e.touches[0].clientY - offsetY;
-                    
-                    activeBox.style.left = `${x}px`;
-                    activeBox.style.top = `${y}px`;
-                }
-            }
-            
-            function stopDrag() {
-                if (activeBox) {
-                    // Reset z-index
-                    activeBox.style.zIndex = "1";
-                    
-                    // Check for collisions
-                    checkCollision(activeBox);
-                    activeBox = null;
-                    
-                    document.removeEventListener('mousemove', drag);
-                    document.removeEventListener('mouseup', stopDrag);
-                }
-            }
-            
-            function stopDragTouch() {
-                if (activeBox) {
-                    // Reset z-index
-                    activeBox.style.zIndex = "1";
-                    
-                    // Check for collisions
-                    checkCollision(activeBox);
-                    activeBox = null;
-                    
-                    document.removeEventListener('touchmove', dragTouch);
-                    document.removeEventListener('touchend', stopDragTouch);
-                    document.removeEventListener('touchcancel', stopDragTouch);
-                }
-            }
-            
-            // Layout boxes initially
-            window.addEventListener('resize', function() {
-                // Update container dimensions on resize
-                const newRect = container.getBoundingClientRect();
-                containerRect.width = newRect.width;
-                containerRect.height = newRect.height;
-                
-                // Rearrange boxes
-                arrangeBoxes();
-            });
-            
-            // Initialize layout
-            arrangeBoxes();
-            
-            // Responsive behavior for mobile
-            function checkMobile() {
-                const isMobile = window.innerWidth <= 768;
-                
-                boxes.forEach(box => {
-                    if (isMobile) {
-                        box.setAttribute('draggable', 'false');
-                        box.style.cursor = 'default';
-                    } else {
-                        box.setAttribute('draggable', 'true');
-                        box.style.cursor = 'grab';
-                    }
-                });
-            }
-            
-            // Check initial state and on resize
-            checkMobile();
-            window.addEventListener('resize', checkMobile);
-        });
-
-        // Lightbox logic
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = lightbox.querySelector('img');
-        const prevBtn = lightbox.querySelector('.prev');
-        const nextBtn = lightbox.querySelector('.next');
-        const galleryImages = Array.from(document.querySelectorAll('.gallery img'));
-        
-        let currentFullscreenIndex = 0;
-        
-        // Open lightbox on image click
-        galleryImages.forEach((img, index) => {
-            img.addEventListener('click', (e) => {
-                e.preventDefault();       // verhindert Drag & Co.
-                e.stopPropagation();      // verhindert, dass das Event zur Box weitergeht
-        
-                currentFullscreenIndex = index;
-                showFullscreenImage(currentFullscreenIndex);
-            });
-        });
-        
-        function showFullscreenImage(index) {
-            lightboxImg.src = galleryImages[index].src;
-            lightbox.style.display = 'flex';
-        }
-        
-        // Navigation
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentFullscreenIndex = (currentFullscreenIndex - 1 + galleryImages.length) % galleryImages.length;
-            showFullscreenImage(currentFullscreenIndex);
-        });
-        
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentFullscreenIndex = (currentFullscreenIndex + 1) % galleryImages.length;
-            showFullscreenImage(currentFullscreenIndex);
-        });
-        
-        // Close lightbox on click outside image
-        lightbox.addEventListener('click', () => {
-            lightbox.style.display = 'none';
-        });
-        
-        // Prevent closing when clicking on image or buttons
-        lightboxImg.addEventListener('click', e => e.stopPropagation());
-        prevBtn.addEventListener('click', e => e.stopPropagation());
-        nextBtn.addEventListener('click', e => e.stopPropagation());
-        
-        // Close with ESC key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                lightbox.style.display = 'none';
-            }
-        });
-
-    </script>
+    </section>
     
-    <div class="lightbox-overlay" id="lightbox">
-        <button class="lightbox-button prev">&#10094;</button>
-        <img src="" alt="Fullscreen Image">
-        <button class="lightbox-button next">&#10095;</button>
-    </div>
-
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-light-gray" style="background-color: var(--light-gray);">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl section-title accent-pink">Über mich</h2>
+            
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+                <div class="about-image w-full md:w-1/3">
+                    <div class="card overflow-hidden">
+                        <div style="background-color: var(--medium-gray); height: 400px;" class="flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-user text-6xl mb-4" style="color: var(--accent-pink);"></i>
+                                <p class="text-sm opacity-70">Profilbild</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-2/3">
+                    <p class="text-lg mb-6">
+                        Ich bin Lars, Grafikdesigner in Ausbildung. Mein Fokus liegt auf sinnstiftenden Projekten. Ich arbeite kreativ und strukturiert – von der ersten Idee bis zur Umsetzung. Ob visuelles Design oder konzeptuelles Denken: Ich versuche, gestalterisches Gespür mit unternehmerischem Blick zu verbinden. Am liebsten arbeite ich mit Menschen, die etwas bewegen wollen – sozial, kulturell, politisch oder ökologisch.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="card p-6 card-pink-hover">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-birthday-cake mr-3" style="color: var(--accent-pink);"></i>
+                                <h3 class="text-xl font-semibold">Alter</h3>
+                            </div>
+                            <p>24 Jahre</p>
+                        </div>
+                        
+                        <div class="card p-6 card-turquoise-hover">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-graduation-cap mr-3" style="color: var(--accent-turquoise);"></i>
+                                <h3 class="text-xl font-semibold">Bildung</h3>
+                            </div>
+                            <p>Designstudent an der Media University</p>
+                        </div>
+                        
+                        <div class="card p-6 card-yellow-hover">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-paint-brush mr-3" style="color: var(--accent-yellow);"></i>
+                                <h3 class="text-xl font-semibold">Künstler</h3>
+                            </div>
+                            <p>Musik, Film, Fotografie</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Parallax Section 1 -->
+    <section class="parallax" style="background-image: url('https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/abstract-dark-bg.jpg');">
+        <div class="parallax-overlay"></div>
+        <div class="parallax-content">
+            <h2 class="text-4xl font-bold mb-4">Kreativität kennt keine Grenzen</h2>
+            <p class="text-xl">Entdecke meine Arbeit in verschiedenen Medien</p>
+        </div>
+    </section>
+    
+    <!-- Music Section -->
+    <section id="music" class="py-20 bg-dark-gray" style="background-color: var(--dark-gray);">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl section-title accent-turquoise">Musik</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Gefängnisvibes Musikvideo -->
+                <div class="card card-turquoise-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/8bxDIuxjnoI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Gefängnisvibes</h3>
+                        <p class="text-sm mb-4 opacity-70">Musikvideo</p>
+                        <a href="https://www.youtube.com/watch?v=8bxDIuxjnoI" target="_blank" class="btn btn-outline-turquoise text-sm">Ansehen</a>
+                    </div>
+                </div>
+                
+                <!-- Augen auf und durch Mixtape -->
+                <div class="card card-pink-hover">
+                    <div class="media-card">
+                        <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/music-player-dark.jpg" alt="Augen auf und durch Mixtape">
+                        <div class="overlay">
+                            <a href="https://open.spotify.com/intl-de/album/1Dj61MCdvQNq921uvujc2v?si=_FkStoMLRTijcN-SCz1c3A&nd=1&dlsi=587e74392c5845fe" target="_blank" class="btn btn-outline-pink">Auf Spotify hören</a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Augen auf und durch</h3>
+                        <p class="text-sm mb-4 opacity-70">Mixtape</p>
+                        <a href="https://open.spotify.com/intl-de/album/1Dj61MCdvQNq921uvujc2v?si=_FkStoMLRTijcN-SCz1c3A&nd=1&dlsi=587e74392c5845fe" target="_blank" class="btn btn-outline-pink text-sm">Auf Spotify hören</a>
+                    </div>
+                </div>
+                
+                <!-- Leben läuft Musikvideo -->
+                <div class="card card-yellow-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/QzyJ_0bHCHY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Leben läuft</h3>
+                        <p class="text-sm mb-4 opacity-70">Musikvideo Produktion und Feature Part</p>
+                        <a href="https://www.youtube.com/watch?v=QzyJ_0bHCHY" target="_blank" class="btn btn-outline-yellow text-sm">Ansehen</a>
+                    </div>
+                </div>
+                
+                <!-- Es wird wieder frisch Single -->
+                <div class="card card-turquoise-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/dXS1Vcv6U-8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Es wird wieder frisch</h3>
+                        <p class="text-sm mb-4 opacity-70">Single</p>
+                        <a href="https://www.youtube.com/watch?v=dXS1Vcv6U-8" target="_blank" class="btn btn-outline-turquoise text-sm">Ansehen</a>
+                    </div>
+                </div>
+                
+                <!-- Wie bisher feature Part -->
+                <div class="card card-pink-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/S30JYxZbTnE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Wie bisher</h3>
+                        <p class="text-sm mb-4 opacity-70">Feature Part</p>
+                        <a href="https://www.youtube.com/watch?v=S30JYxZbTnE&list=OLAK5uy_lm2TPeWZn5AtCl2YHT1ZGfUZShUDM0Ko8" target="_blank" class="btn btn-outline-pink text-sm">Ansehen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Parallax Section 2 -->
+    <section class="parallax" style="background-image: url('https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/film-production-dark.jpg');">
+        <div class="parallax-overlay"></div>
+        <div class="parallax-content">
+            <h2 class="text-4xl font-bold mb-4">Visuelle Geschichten</h2>
+            <p class="text-xl">Film und Motion Design Projekte</p>
+        </div>
+    </section>
+    
+    <!-- Film Projects Section -->
+    <section id="films" class="py-20 bg-light-gray" style="background-color: var(--light-gray);">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl section-title accent-yellow">Filmprojekte</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dexter Introreconstuction -->
+                <div class="card card-yellow-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/Vr6uZ7TBBnw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Dexter</h3>
+                        <p class="text-sm mb-4 opacity-70">Intro Reconstruction</p>
+                        <a href="https://www.youtube.com/watch?v=Vr6uZ7TBBnw" target="_blank" class="btn btn-outline-yellow text-sm">Ansehen</a>
+                    </div>
+                </div>
+                
+                <!-- Life.mp4 -->
+                <div class="card card-pink-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/fgpDVtZdC4U" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Life.mp4</h3>
+                        <p class="text-sm mb-4 opacity-70">Filmprojekt</p>
+                        <a href="https://www.youtube.com/watch?v=fgpDVtZdC4U" target="_blank" class="btn btn-outline-pink text-sm">Ansehen</a>
+                    </div>
+                </div>
+                
+                <!-- Lovely Day Kurzfilm -->
+                <div class="card card-turquoise-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/wZPYAOzWaY4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Lovely Day</h3>
+                        <p class="text-sm mb-4 opacity-70">Kurzfilm</p>
+                        <a href="https://www.youtube.com/watch?v=wZPYAOzWaY4" target="_blank" class="btn btn-outline-turquoise text-sm">Ansehen</a>
+                    </div>
+                </div>
+                
+                <!-- Campus WG Intro-Sketch -->
+                <div class="card card-yellow-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/EKa0ukdN2P8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Campus WG</h3>
+                        <p class="text-sm mb-4 opacity-70">Intro-Sketch</p>
+                        <a href="https://www.youtube.com/watch?v=EKa0ukdN2P8" target="_blank" class="btn btn-outline-yellow text-sm">Ansehen</a>
+                    </div>
+                </div>
+                
+                <!-- Mäßigkeit Motiondesign Loop -->
+                <div class="card card-pink-hover">
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/MCXfXad805g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Mäßigkeit</h3>
+                        <p class="text-sm mb-4 opacity-70">Motiondesign Loop</p>
+                        <a href="https://www.youtube.com/shorts/MCXfXad805g" target="_blank" class="btn btn-outline-pink text-sm">Ansehen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-dark-gray" style="background-color: var(--dark-gray);">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl section-title accent-pink">Fähigkeiten & Qualifikationen</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Sprachen</h3>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Deutsch</span>
+                            <span>Fließend</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-pink" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Englisch</span>
+                            <span>Sehr gute Verständniskenntnisse</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-pink" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mb-6 mt-10">Musikproduktion</h3>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Mix und Mastering</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-yellow" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">IT-Kenntnisse</h3>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>HTML, CSS</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-turquoise" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Adobe Photoshop</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-turquoise" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Adobe Premiere</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-turquoise" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Adobe After Effects</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-turquoise" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Adobe Illustrator</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-turquoise" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Blender</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-turquoise" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span>Office 365</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress skill-progress-turquoise" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Parallax Section 3 -->
+    <section class="parallax" style="background-image: url('https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-work-dark.jpg');">
+        <div class="parallax-overlay"></div>
+        <div class="parallax-content">
+            <h2 class="text-4xl font-bold mb-4">Visuelle Impressionen</h2>
+            <p class="text-xl">Ein Blick in meine kreative Welt</p>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-light-gray" style="background-color: var(--light-gray);">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl section-title accent-turquoise">Bildergalerie</h2>
+            
+            <div class="gallery">
+                <!-- Placeholder gallery items -->
+                <div class="gallery-item">
+                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-1.jpg" alt="Design Work">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-2.jpg" alt="Design Work">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-3.jpg" alt="Design Work">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-4.jpg" alt="Design Work">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-5.jpg" alt="Design Work">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://cdn.jsdelivr.net/gh/musaab123/Hosted-Images@master/design-placeholder-6.jpg" alt="Design Work">
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <p class="text-sm opacity-70 mb-4">Die Bildergalerie zeigt einen Ausschnitt meiner gestalterischen Arbeiten</p>
+                <p class="text-sm opacity-70">Hier könntest du Bilder deiner Arbeiten einfügen</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-dark-gray" style="background-color: var(--dark-gray);">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl section-title accent-yellow">Kontakt</h2>
+            
+            <div class="flex flex-col md:flex-row gap-10">
+                <div class="w-full md:w-1/2">
+                    <div class="card p-6 mb-6">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-envelope mr-3" style="color: var(--accent-yellow);"></i>
+                            <h3 class="text-xl font-semibold">Email</h3>
+                        </div>
+                        <a href="mailto:lars.kaster@gmail.com" class="hover:text-accent-yellow transition-colors">lars.kaster@gmail.com</a>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-link mr-3" style="color: var(--accent-pink);"></i>
+                            <h3 class="text-xl font-semibold">Social Media</h3>
+                        </div>
+                        
+                        <div class="flex flex-wrap justify-center mt-6">
+                            <a href="https://www.instagram.com/psychedelicpandemic/?hl=de" target="_blank" class="social-link social-link-pink">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@larsmanstanding" target="_blank" class="social-link social-link-turquoise">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://open.spotify.com/intl-de/album/1Dj61MCdvQNq921uvujc2v?si=_FkStoMLRTijcN-SCz1c3A&nd=1&dlsi=587e74392c5845fe" target="_blank" class="social-link social-link-yellow">
+                                <i class="fab fa-spotify"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/2">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold mb-6">Kontaktformular</h3>
+                        
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="block mb-2">Name</label>
+                                <input type="text" id="name" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="email" class="block mb-2">Email</label>
+                                <input type="email" id="email" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="message" class="block mb-2">Nachricht</label>
+                                <textarea id="message" rows="5" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-outline-turquoise w-full">Nachricht senden</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-10 bg-medium-gray" style="background-color: var(--medium-gray);">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 Lars Kaster. Alle Rechte vorbehalten.</p>
+            <div class="mt-4">
+                <span class="inline-block w-3 h-3 rounded-full mr-1" style="background-color: var(--accent-pink);"></span>
+                <span class="inline-block w-3 h-3 rounded-full mr-1" style="background-color: var(--accent-turquoise);"></span>
+                <span class="inline-block w-3 h-3 rounded-full" style="background-color: var(--accent-yellow);"></span>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Navigation scroll behavior
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const closeMenuBtn = document.querySelector('.close-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.style.display = 'flex';
+            setTimeout(() => {
+                mobileMenu.style.opacity = '1';
+            }, 10);
+        });
+        
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.style.opacity = '0';
+            setTimeout(() => {
+                mobileMenu.style.display = 'none';
+            }, 300);
+        });
+        
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.style.opacity = '0';
+                setTimeout(() => {
+                    mobileMenu.style.display = 'none';
+                }, 300);
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Simple form validation (demonstration purposes)
+        const contactForm = document.querySelector('form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Danke für deine Nachricht! Dies ist nur eine Demo - das Formular ist nicht funktional.');
+            });
+        }
+    </script>
 </body>
 </html>
