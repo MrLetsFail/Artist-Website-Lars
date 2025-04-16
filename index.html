@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lars - Grafikdesigner Portfolio</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -377,48 +377,65 @@
             }
         }
         
-        /* Gallery styling */
-        .gallery {
+        /* Pinterest-style Masonry Gallery */
+        .masonry-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-auto-rows: 10px;
+            grid-gap: 1rem;
         }
         
-        .gallery-item {
+        .masonry-item {
             border-radius: 10px;
             overflow: hidden;
+            grid-row-end: span var(--span);
             position: relative;
-            height: 200px;
+            transition: transform 0.3s ease;
         }
         
-        .gallery-item img {
+        .masonry-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
+            display: block;
         }
         
-        .gallery-item:hover img {
+        .masonry-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .masonry-item:hover img {
             transform: scale(1.05);
         }
         
-        /* Extra styles for embeds */
-        .embed-container {
+        /* Profile image container */
+        .profile-image-container {
+            width: 100%;
+            height: 400px;
             position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
             overflow: hidden;
-            max-width: 100%;
-            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--medium-gray);
         }
         
-        .embed-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .profile-image {
+            width: 50%;
+            height: auto;
+            object-fit: contain;
             border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-pink);
         }
         
         /* Form feedback styling */
@@ -451,6 +468,25 @@
             font-size: 0.8rem;
             margin-top: 0.25rem;
             display: none;
+        }
+        
+        /* Extra styles for embeds */
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        
+        .embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -519,15 +555,20 @@
             
             <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
                 <div class="about-image w-full md:w-1/3">
-                  <div class="card overflow-hidden">
-                    <div class="bg-[var(--medium-gray)] aspect-square relative flex items-center justify-center">
-                      <img src="Assets/Profilbild.png"
-                           alt="Profilbild"
-                           class="w-1/2 h-auto object-contain absolute"
-                           onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<i class=\'fas fa-user text-6xl\' style=\'color: var(--accent-pink);\'></i>');">
+                    <div class="card overflow-hidden">
+                        <div class="profile-image-container">
+                            <img src="Assets/Profilbild.png" 
+                                 alt="Lars Profilbild" 
+                                 class="profile-image"
+                                 onError="this.style.display='none'; document.getElementById('profile-placeholder').style.display='flex';">
+                            <div id="profile-placeholder" class="profile-placeholder" style="display: none;">
+                                <i class="fas fa-user text-6xl mb-4"></i>
+                                <p class="text-sm opacity-70">Profilbild</p>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
+                
                 <div class="w-full md:w-2/3">
                     <p class="text-lg mb-6">
                         Ich bin Lars, Grafikdesigner in Ausbildung. Mein Fokus liegt auf sinnstiftenden Projekten. Ich arbeite kreativ und strukturiert – von der ersten Idee bis zur Umsetzung. Ob visuelles Design oder konzeptuelles Denken: Ich versuche, gestalterisches Gespür mit unternehmerischem Blick zu verbinden. Am liebsten arbeite ich mit Menschen, die etwas bewegen wollen – sozial, kulturell, politisch oder ökologisch.
@@ -851,39 +892,39 @@
         </div>
     </section>
     
-    <!-- Gallery Section -->
+    <!-- Gallery Section with Pinterest-like masonry layout -->
     <section id="gallery" class="py-20 bg-light-gray" style="background-color: var(--light-gray);">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl section-title accent-turquoise">Fotorgalerie</h2>
+            <h2 class="text-3xl section-title accent-turquoise">Fotogalerie</h2>
             
-            <div class="gallery">
-                <!-- Gallery items with reliable image URLs -->
-                <div class="gallery-item">
-                    <img src="Assets/Bild.png" alt="Design Work">
+            <div id="masonry-gallery" class="masonry-gallery">
+                <!-- Gallery items will be populated via JavaScript -->
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild.png" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="Assets/Bild2.png" alt="Design Work">
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild2.png" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="Assets/Bild3.png" alt="Design Work">
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild3.png" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="Assets/Bild4.png" alt="Design Work">
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild4.png" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="Assets/Bild5.png" alt="Design Work">
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild5.png" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="Assets/Bild6.jpg" alt="Design Work">
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild6.jpg" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="Assets/Bild7.jpg" alt="Design Work">
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild7.jpg" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="Assets/Bild8.jpg" alt="Design Work">
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild8.jpg" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="Assets/Bild9.jpeg" alt="Design Work">
+                <div class="masonry-item" style="--span: 20;">
+                    <img src="Assets/Bild9.jpeg" alt="Design Work" onload="resizeGridItem(this)">
                 </div>
             </div>
             
@@ -975,7 +1016,6 @@
         </div>
     </footer>
     
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
     <script>
         // Navigation scroll behavior
         const navbar = document.querySelector('.navbar');
@@ -1067,12 +1107,6 @@
             return isValid;
         }
         
-        // Initialize EmailJS with your public key
-        (function() {
-            // https://dashboard.emailjs.com/admin/account
-            emailjs.init("YOUR_PUBLIC_KEY");
-        })();
-        
         // Contact form submission
         const contactForm = document.getElementById('contact-form');
         const formFeedback = document.getElementById('form-feedback');
@@ -1086,49 +1120,52 @@
             }
             
             // For demonstration purposes, we'll simulate a successful form submission
-            // In a real implementation, you would use EmailJS or a backend service
+            formFeedback.className = 'form-feedback success';
+            formFeedback.style.display = 'block';
+            feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
+            contactForm.reset();
             
-            // Simulating form submission
+            // Hide the success message after 5 seconds
             setTimeout(function() {
-                formFeedback.className = 'form-feedback success';
-                formFeedback.style.display = 'block';
-                feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
-                contactForm.reset();
-                
-                // Hide the success message after 5 seconds
-                setTimeout(function() {
-                    formFeedback.style.display = 'none';
-                }, 5000);
-            }, 1000);
-            
-           //* Uncomment this for actual EmailJS implementation *//
-            const templateParams = {
-                from_name: document.getElementById('name').value,
-                from_email: document.getElementById('email').value,
-                message: document.getElementById('message').value
-            };
-            
-            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-                .then(function(response) {
-                    formFeedback.className = 'form-feedback success';
-                    formFeedback.style.display = 'block';
-                    feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
-                    contactForm.reset();
-                    
-                    setTimeout(function() {
-                        formFeedback.style.display = 'none';
-                    }, 5000);
-                }, function(error) {
-                    formFeedback.className = 'form-feedback error';
-                    formFeedback.style.display = 'block';
-                    feedbackMessage.textContent = 'Es gab ein Problem beim Senden deiner Nachricht. Bitte versuche es später erneut.';
-                    
-                    setTimeout(function() {
-                        formFeedback.style.display = 'none';
-                    }, 5000);
-                });
-            
+                formFeedback.style.display = 'none';
+            }, 5000);
         });
+        
+        // Function to resize grid items for masonry layout
+        function resizeGridItem(item) {
+            const grid = document.getElementById("masonry-gallery");
+            const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+            const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+            
+            // Get the image inside the item
+            const img = item;
+            const container = img.parentElement;
+            
+            // Reset the span temporarily to get the content height
+            container.style.gridRowEnd = "span 1";
+            
+            // Wait for the image to load to get its correct height
+            const height = img.clientHeight;
+            const span = Math.ceil((height + rowGap) / (rowHeight + rowGap));
+            
+            // Update the span variable and CSS custom property
+            container.style.setProperty('--span', span);
+            container.style.gridRowEnd = `span ${span}`;
+        }
+        
+        // Resize all grid items on load and resize
+        function resizeAllGridItems() {
+            const items = document.querySelectorAll(".masonry-item img");
+            items.forEach(item => {
+                resizeGridItem(item);
+            });
+        }
+        
+        // Handle window resize for the masonry layout
+        window.addEventListener("resize", resizeAllGridItems);
+        
+        // Initialize masonry layout on page load
+        window.addEventListener("load", resizeAllGridItems);
         
         // Parallax effect for modern browsers
         function handleParallax() {
