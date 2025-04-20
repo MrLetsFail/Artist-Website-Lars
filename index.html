@@ -1079,203 +1079,174 @@
         </div>
     </footer>
     
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
-    <script>
-        // Navigation scroll behavior
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-        
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const closeMenuBtn = document.querySelector('.close-menu');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.style.display = 'flex';
-            setTimeout(() => {
-                mobileMenu.style.opacity = '1';
-            }, 10);
-        });
-        
-        closeMenuBtn.addEventListener('click', () => {
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+<script>
+    // EmailJS-Initialisierung
+    (function() {
+        emailjs.init("br9D5BP_wq1xpSAN3");
+    })();
+
+    // Navigation scroll behavior
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const closeMenuBtn = document.querySelector('.close-menu');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.style.display = 'flex';
+        setTimeout(() => {
+            mobileMenu.style.opacity = '1';
+        }, 10);
+    });
+    
+    closeMenuBtn.addEventListener('click', () => {
+        mobileMenu.style.opacity = '0';
+        setTimeout(() => {
+            mobileMenu.style.display = 'none';
+        }, 300);
+    });
+    
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', () => {
             mobileMenu.style.opacity = '0';
             setTimeout(() => {
                 mobileMenu.style.display = 'none';
             }, 300);
         });
-        
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.style.opacity = '0';
-                setTimeout(() => {
-                    mobileMenu.style.display = 'none';
-                }, 300);
+    });
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
+    });
+
+    // Function to validate form
+    function validateForm() {
+        let isValid = true;
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
         
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // Reset previous error states
+        document.getElementById('name-error').style.display = 'none';
+        document.getElementById('email-error').style.display = 'none';
+        document.getElementById('message-error').style.display = 'none';
+        nameInput.classList.remove('error');
+        emailInput.classList.remove('error');
+        messageInput.classList.remove('error');
+        
+        // Validate name
+        if (nameInput.value.trim() === '') {
+            document.getElementById('name-error').style.display = 'block';
+            nameInput.classList.add('error');
+            isValid = false;
+        }
+        
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+            document.getElementById('email-error').style.display = 'block';
+            emailInput.classList.add('error');
+            isValid = false;
+        }
+        
+        // Validate message
+        if (messageInput.value.trim() === '') {
+            document.getElementById('message-error').style.display = 'block';
+            messageInput.classList.add('error');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
+    // Contact form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contact-form');
+        const formFeedback = document.getElementById('form-feedback');
+        const feedbackMessage = document.getElementById('feedback-message');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // Show loading state
+                formFeedback.className = 'form-feedback loading';
+                formFeedback.style.display = 'block';
+                feedbackMessage.textContent = 'Nachricht wird gesendet...';
+                
+                // EmailJS senden
+                emailjs.send("service_b4kflr9", "template_9xaakfq", {
+                    from_name: document.getElementById('name').value,
+                    reply_to: document.getElementById('email').value,
+                    message: document.getElementById('message').value,
+                    to_name: "Lars",
+                    to_email: "lars.kaster@gmx.de"
+                })
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    formFeedback.className = 'form-feedback success';
+                    feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
+                    contactForm.reset();
+                    
+                    // Hide the feedback message after 5 seconds
+                    setTimeout(function() {
+                        formFeedback.style.display = 'none';
+                    }, 5000);
+                })
+                .catch(function(error) {
+                    console.log('FAILED...', error);
+                    formFeedback.className = 'form-feedback error';
+                    feedbackMessage.textContent = 'Es gab ein Problem beim Senden deiner Nachricht. Bitte versuche es später erneut.';
                 });
             });
-        });
-        // Function to validate form
-            function validateForm() {
-                let isValid = true;
-                const nameInput = document.getElementById('name');
-                const emailInput = document.getElementById('email');
-                const messageInput = document.getElementById('message');
-                
-                // Reset previous error states
-                document.getElementById('name-error').style.display = 'none';
-                document.getElementById('email-error').style.display = 'none';
-                document.getElementById('message-error').style.display = 'none';
-                nameInput.classList.remove('error');
-                emailInput.classList.remove('error');
-                messageInput.classList.remove('error');
-                
-                // Validate name
-                if (nameInput.value.trim() === '') {
-                    document.getElementById('name-error').style.display = 'block';
-                    nameInput.classList.add('error');
-                    isValid = false;
-                }
-                
-                // Validate email
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailInput.value.trim())) {
-                    document.getElementById('email-error').style.display = 'block';
-                    emailInput.classList.add('error');
-                    isValid = false;
-                }
-                
-                // Validate message
-                if (messageInput.value.trim() === '') {
-                    document.getElementById('message-error').style.display = 'block';
-                    messageInput.classList.add('error');
-                    isValid = false;
-                }
-                
-                return isValid;
-            }
+        }
+    });
+    
+    // Parallax effect for modern browsers
+    function handleParallax() {
+        const parallaxElements = document.querySelectorAll('.parallax');
+        
+        parallaxElements.forEach(element => {
+            const scrollPosition = window.pageYOffset;
+            const elementPosition = element.offsetTop;
+            const distance = scrollPosition - elementPosition;
             
-            // Contact form submission
-            document.addEventListener('DOMContentLoaded', function() {
-                const contactForm = document.getElementById('contact-form');
-                const formFeedback = document.getElementById('form-feedback');
-                const feedbackMessage = document.getElementById('feedback-message');
-                
-                if (contactForm) {
-                    contactForm.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        
-                        if (!validateForm()) {
-                            return;
-                        }
-                        
-                        // Show loading state
-                        formFeedback.className = 'form-feedback loading';
-                        formFeedback.style.display = 'block';
-                        feedbackMessage.textContent = 'Nachricht wird gesendet...';
-                        
-                        // Option 1: Using Formspree
-                        fetch("https://formspree.io/f/xbjvrzrg", {
-                            method: "POST",
-                            headers: {
-                                "Accept": "application/json",
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                name: document.getElementById('name').value,
-                                email: document.getElementById('email').value,
-                                message: document.getElementById('message').value
-                            })
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                // Show success message
-                                formFeedback.className = 'form-feedback success';
-                                feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
-                                contactForm.reset();
-                            } else {
-                                throw new Error('Fehler beim Senden über Formspree');
-                            }
-                        })
-                        .catch(error => {
-                            console.log("Formspree failed, trying EmailJS as backup", error);
-                            
-                            // Option 2: Using EmailJS as backup
-                            emailjs.send("service_b4kflr9", "template_contact", {
-                                from_name: document.getElementById('name').value,
-                                reply_to: document.getElementById('email').value,
-                                message: document.getElementById('message').value,
-                                to_email: "lars.kaster@gmx.de"
-                            })
-                            .then(function() {
-                                formFeedback.className = 'form-feedback success';
-                                feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
-                                contactForm.reset();
-                            })
-                            .catch(function(err) {
-                                console.error("Beide Methoden fehlgeschlagen:", err);
-                                formFeedback.className = 'form-feedback error';
-                                feedbackMessage.textContent = 'Es gab ein Problem beim Senden deiner Nachricht. Bitte versuche es später erneut.';
-                            });
-                        })
-                        .finally(() => {
-                            // Hide the feedback message after 5 seconds only if success
-                            if (formFeedback.className === 'form-feedback success') {
-                                setTimeout(function() {
-                                    formFeedback.style.display = 'none';
-                                }, 5000);
-                            }
-                        });
-                    });
-                }
-            });
-
-        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init("service_b4kflr9"); // Ersetze mit deinem öffentlichen Schlüssel
-  })();
+            if (Math.abs(distance) < window.innerHeight) {
+                const parallaxSpeed = 0.5;
+                const yPos = -(distance * parallaxSpeed);
+                element.style.backgroundPositionY = `calc(50% + ${yPos}px)`;
+            }
+        });
+    }
+    
+    // Add parallax effect if not on mobile
+    if (window.innerWidth > 768) {
+        window.addEventListener('scroll', handleParallax);
+        // Initialize on page load
+        handleParallax();
+    }
 </script>
 
-        
-        // Parallax effect for modern browsers
-        function handleParallax() {
-            const parallaxElements = document.querySelectorAll('.parallax');
-            
-            parallaxElements.forEach(element => {
-                const scrollPosition = window.pageYOffset;
-                const elementPosition = element.offsetTop;
-                const distance = scrollPosition - elementPosition;
-                
-                if (Math.abs(distance) < window.innerHeight) {
-                    const parallaxSpeed = 0.5;
-                    const yPos = -(distance * parallaxSpeed);
-                    element.style.backgroundPositionY = `calc(50% + ${yPos}px)`;
-                }
-            });
-        }
-        
-        // Add parallax effect if not on mobile
-        if (window.innerWidth > 768) {
-            window.addEventListener('scroll', handleParallax);
-            // Initialize on page load
-            handleParallax();
-        }
-    </script>
 </body>
 </html>
