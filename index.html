@@ -507,6 +507,12 @@
             height: 100%;
             border-radius: 10px;
         }
+        .form-feedback.loading {
+            background-color: rgba(255, 223, 60, 0.2);
+            color: var(--accent-yellow);
+            border: 1px solid var(--accent-yellow);
+        }
+
     </style>
 </head>
 <body>
@@ -1078,6 +1084,53 @@
     
 <script>
 
+    <script>
+        
+    // Funktion zur Formularvalidierung
+    function validateForm() {
+        let isValid = true;
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+        
+        // Zurücksetzen früherer Fehlerzustände
+        const nameError = document.getElementById('name-error');
+        const emailError = document.getElementById('email-error');
+        const messageError = document.getElementById('message-error');
+        
+        if (nameError) nameError.style.display = 'none';
+        if (emailError) emailError.style.display = 'none';
+        if (messageError) messageError.style.display = 'none';
+        
+        nameInput.classList.remove('error');
+        emailInput.classList.remove('error');
+        messageInput.classList.remove('error');
+        
+        // Name validieren
+        if (nameInput.value.trim() === '') {
+            if (nameError) nameError.style.display = 'block';
+            nameInput.classList.add('error');
+            isValid = false;
+        }
+        
+        // E-Mail validieren
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+            if (emailError) emailError.style.display = 'block';
+            emailInput.classList.add('error');
+            isValid = false;
+        }
+        
+        // Nachricht validieren
+        if (messageInput.value.trim() === '') {
+            if (messageError) messageError.style.display = 'block';
+            messageInput.classList.add('error');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
     // Formular Validierung und Feedback
     document.addEventListener('DOMContentLoaded', function() {
         const contactForm = document.getElementById('contact-form');
@@ -1120,6 +1173,7 @@
                     }
                 })
                 .catch(error => {
+                    console.error('Formular-Fehler:', error);
                     // Fehler
                     formFeedback.className = 'form-feedback error';
                     feedbackMessage.textContent = 'Es gab ein Problem beim Senden deiner Nachricht. Bitte versuche es später erneut.';
