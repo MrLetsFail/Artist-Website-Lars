@@ -1037,7 +1037,7 @@
                             <p id="feedback-message"></p>
                         </div>
                         
-                        <form id="contact-form" action="https://formspree.io/f/lars.kaster@gmx.de" method="POST">
+                        <form id="contact-form" action="https://formspree.io/f/xbjvrzrg" method="POST">
                             <div class="mb-4">
                                 <label for="name" class="block mb-2">Name</label>
                                 <input type="text" id="name" name="name" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);" required>
@@ -1055,9 +1055,6 @@
                                 <textarea id="message" name="message" rows="5" class="w-full p-3 bg-light-gray border border-gray-700 rounded-lg focus:outline-none focus:border-accent-turquoise" style="background-color: var(--light-gray);" required></textarea>
                                 <p class="error-message" id="message-error">Bitte gib eine Nachricht ein.</p>
                             </div>
-                            
-                            <input type="hidden" name="_subject" value="Neue Nachricht von der Portfolio Website">
-                            <input type="text" name="_gotcha" style="display:none">
                             
                             <button type="submit" class="btn btn-outline-turquoise w-full">Nachricht senden</button>
                         </form>
@@ -1079,13 +1076,58 @@
         </div>
     </footer>
     
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
 <script>
-    // EmailJS-Initialisierung
-    (function() {
-        emailjs.init("br9D5BP_wq1xpSAN3");
-    })();
 
+    // Formular Validierung und Feedback
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contact-form');
+        const formFeedback = document.getElementById('form-feedback');
+        const feedbackMessage = document.getElementById('feedback-message');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // Zeige Lade-Status
+                formFeedback.className = 'form-feedback loading';
+                formFeedback.style.display = 'block';
+                feedbackMessage.textContent = 'Nachricht wird gesendet...';
+                
+                // Formular als FormData versenden
+                fetch(contactForm.action, {
+                    method: "POST",
+                    body: new FormData(contactForm),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Erfolg
+                        formFeedback.className = 'form-feedback success';
+                        feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
+                        contactForm.reset();
+                        
+                        setTimeout(function() {
+                            formFeedback.style.display = 'none';
+                        }, 5000);
+                    } else {
+                        throw new Error('Netzwerkfehler');
+                    }
+                })
+                .catch(error => {
+                    // Fehler
+                    formFeedback.className = 'form-feedback error';
+                    feedbackMessage.textContent = 'Es gab ein Problem beim Senden deiner Nachricht. Bitte versuche es später erneut.';
+                });
+            });
+        }
+    });
+    
     // Navigation scroll behavior
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
@@ -1134,93 +1176,6 @@
                 behavior: 'smooth'
             });
         });
-    });
-
-    // Function to validate form
-    function validateForm() {
-        let isValid = true;
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-        const messageInput = document.getElementById('message');
-        
-        // Reset previous error states
-        document.getElementById('name-error').style.display = 'none';
-        document.getElementById('email-error').style.display = 'none';
-        document.getElementById('message-error').style.display = 'none';
-        nameInput.classList.remove('error');
-        emailInput.classList.remove('error');
-        messageInput.classList.remove('error');
-        
-        // Validate name
-        if (nameInput.value.trim() === '') {
-            document.getElementById('name-error').style.display = 'block';
-            nameInput.classList.add('error');
-            isValid = false;
-        }
-        
-        // Validate email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailInput.value.trim())) {
-            document.getElementById('email-error').style.display = 'block';
-            emailInput.classList.add('error');
-            isValid = false;
-        }
-        
-        // Validate message
-        if (messageInput.value.trim() === '') {
-            document.getElementById('message-error').style.display = 'block';
-            messageInput.classList.add('error');
-            isValid = false;
-        }
-        
-        return isValid;
-    }
-    
-    // Contact form submission
-    document.addEventListener('DOMContentLoaded', function() {
-        const contactForm = document.getElementById('contact-form');
-        const formFeedback = document.getElementById('form-feedback');
-        const feedbackMessage = document.getElementById('feedback-message');
-        
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                if (!validateForm()) {
-                    return;
-                }
-                
-                // Show loading state
-                formFeedback.className = 'form-feedback loading';
-                formFeedback.style.display = 'block';
-                feedbackMessage.textContent = 'Nachricht wird gesendet...';
-                
-                // EmailJS senden
-                emailjs.send("service_b4kflr9", "template_s2paqb1", {
-                    from_name: document.getElementById('name').value,
-                    reply_to: document.getElementById('email').value,
-                    message: document.getElementById('message').value,
-                    to_name: "Lars",
-                    to_email: "lars.kaster@gmx.de"
-                })
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    formFeedback.className = 'form-feedback success';
-                    feedbackMessage.textContent = 'Danke für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.';
-                    contactForm.reset();
-                    
-                    // Hide the feedback message after 5 seconds
-                    setTimeout(function() {
-                        formFeedback.style.display = 'none';
-                    }, 5000);
-                })
-                .catch(function(error) {
-                    console.log('FAILED...', error);
-                    formFeedback.className = 'form-feedback error';
-                    feedbackMessage.textContent = 'Es gab ein Problem beim Senden deiner Nachricht. Bitte versuche es später erneut.';
-                });
-            });
-        }
     });
     
     // Parallax effect for modern browsers
