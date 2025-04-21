@@ -77,17 +77,12 @@
         .accent-yellow::after {
             background-color: var(--accent-yellow);
         }
-        
+        /* Hero-Section mit Hintergrundbild */
         .hero {
             height: 100vh;
             background-color: var(--dark-gray);
             position: relative;
             overflow: hidden;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
         }
         
         .hero-bg {
@@ -97,6 +92,44 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, rgba(255, 87, 150, 0.1), rgba(0, 230, 195, 0.1));
+            z-index: 1; /* Niedrigere z-index, aber über dem Bild */
+        }
+        
+        .hero-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Unterste Ebene */
+        }
+        
+        .hero-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Assets/Lars_bei_der_arbeit.jpg'); /* Pfad zu deinem Bild */
+            background-size: cover;
+            background-position: center right; /* Bild ist rechts ausgerichtet */
+            opacity: 0.8; /* Leichte Transparenz des gesamten Bildes */
+        }
+        
+        .hero-image-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, 
+                        rgba(18, 18, 18, 1) 0%, /* Vollständig undurchsichtig links */
+                        rgba(18, 18, 18, 0.9) 20%,
+                        rgba(18, 18, 18, 0.7) 40%,
+                        rgba(18, 18, 18, 0.4) 60%,
+                        rgba(18, 18, 18, 0.2) 80%,
+                        rgba(18, 18, 18, 0) 100%); /* Vollständig transparent rechts */
+            z-index: 1; /* Über dem Bild, aber unter anderen Elementen */
         }
         
         .hero-shapes {
@@ -106,8 +139,13 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            z-index: 2; /* Über dem Hintergrundbild und Gradient */
         }
         
+        .hero-content {
+            position: relative;
+            z-index: 3; /* Höchste Ebene, über allem anderen */
+        }
         .hero-shape {
             position: absolute;
             border-radius: 50%;
@@ -555,23 +593,28 @@
     </div>
     
     <!-- Hero Section -->
-    <section class="hero flex items-center">
-        <div class="hero-bg"></div>
-        <div class="hero-shapes">
-            <div class="hero-shape shape-1"></div>
-            <div class="hero-shape shape-2"></div>
-            <div class="hero-shape shape-3"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 hero-content">
-            <h1 class="text-5xl md:text-7xl font-bold mb-4">Hallo, ich bin <span style="color: var(--accent-pink);">Lars</span></h1>
-            <h2 class="text-2xl md:text-3xl mb-8">Creative Content Producer in Ausbildung</h2>
-            <div class="flex flex-wrap gap-4">
-                <a href="#about" class="btn btn-outline-pink">Mehr über mich</a>
-                <a href="#contact" class="btn btn-outline-turquoise">Kontakt</a>
+        <section class="hero flex items-center">
+            <div class="hero-bg"></div>
+            <div class="hero-image-container">
+                <div class="hero-image-gradient"></div>
+                <div class="hero-image"></div>
             </div>
-        </div>
-    </section>
+            <div class="hero-shapes">
+                <div class="hero-shape shape-1"></div>
+                <div class="hero-shape shape-2"></div>
+                <div class="hero-shape shape-3"></div>
+            </div>
+            
+            <div class="container mx-auto px-4 hero-content">
+                <h1 class="text-5xl md:text-7xl font-bold mb-4">Hallo, ich bin <span style="color: var(--accent-pink);">Lars</span></h1>
+                <h2 class="text-2xl md:text-3xl mb-8">Grafikdesigner in Ausbildung</h2>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#about" class="btn btn-outline-pink">Mehr über mich</a>
+                    <a href="#contact" class="btn btn-outline-turquoise">Kontakt</a>
+                </div>
+            </div>
+        </section>
+
     
     <!-- About Section -->
     <section id="about" class="py-20 bg-light-gray" style="background-color: var(--light-gray);">
