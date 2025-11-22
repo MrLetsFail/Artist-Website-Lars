@@ -259,3 +259,96 @@ sliders.forEach(slider => {
         slider.scrollLeft = scrollLeft - walk;
     });
 });
+
+// --- RANDOM SCATTER MARQUEE LOGIC ---
+
+// 1. Konfiguration: 20 verschiedene Layout-Varianten
+// y: Verschiebung nach oben/unten (in px)
+// w: Breite (in px) - da quadratisch, ist das auch die Höhe
+// z: z-index (wer liegt oben?)
+const layouts = [
+    { y: -120, w: 280, z: 1 }, // Ganz oben, mittel
+    { y: 120,  w: 320, z: 3 }, // Ganz unten, groß
+    { y: 0,    w: 400, z: 2 }, // Mitte, riesig (Main Feature)
+    { y: -60,  w: 220, z: 4 }, // Leicht oben, klein, im Vordergrund
+    { y: 80,   w: 250, z: 1 }, // Unten, klein
+    { y: -150, w: 300, z: 0 }, // Extrem oben, Hintergrund
+    { y: 150,  w: 260, z: 2 }, // Extrem unten
+    { y: -30,  w: 350, z: 3 }, // Fast mitte, groß
+    { y: 40,   w: 200, z: 5 }, // Mitte unten, sehr klein, ganz vorne
+    { y: -90,  w: 310, z: 2 },
+    { y: 100,  w: 290, z: 1 },
+    { y: -10,  w: 240, z: 4 },
+    { y: 130,  w: 330, z: 2 },
+    { y: -130, w: 210, z: 3 },
+    { y: 50,   w: 380, z: 1 }, // Groß
+    { y: -70,  w: 270, z: 2 },
+    { y: 90,   w: 230, z: 4 },
+    { y: 20,   w: 300, z: 3 },
+    { y: -110, w: 340, z: 1 },
+    { y: 110,  w: 200, z: 5 }
+];
+
+function initScatterMarquee(trackId, reverse = false) {
+    const track = document.getElementById(trackId);
+    if (!track) return;
+
+    // Alle Original-Items holen
+    const originalItems = Array.from(track.children);
+    
+    // Puffer für die Zufallslogik (merkt sich die letzten 4 Indizes)
+    let lastIndices = [];
+
+    // Styles auf die Originale anwenden
+    originalItems.forEach(item => {
+        let randomIndex;
+        
+        // Logik: Wähle eine Zahl, die NICHT in den letzten 4 war
+        do {
+            randomIndex = Math.floor(Math.random() * layouts.length);
+        } while (lastIndices.includes(randomIndex));
+
+        // Index speichern und Liste kurz halten
+        lastIndices.push(randomIndex);
+        if (lastIndices.length > 4) lastIndices.shift();
+
+        // Style anwenden
+        const style = layouts[randomIndex];
+        applyStyleToItem(item, style);
+    });
+
+    // JETZT erst klonen (damit der Klon exakt das gleiche Layout hat wie das Original)
+    originalItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        // Wichtig: `aria-hidden` für Screenreader, da es nur Deko ist
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+    });
+
+    // Animation starten
+    if (reverse) {
+        track.classList.add('animate-scroll-reverse');
+    } else {
+        track.classList.add('animate-scroll');
+    }
+}
+
+function applyStyleToItem(item, style) {
+    // Größe setzen
+    item.style.width = `${style.w}px`;
+    // Wichtig: Transform setzen, aber Skalierung für Hover-Effekt sauber halten
+    item.style.transform = `translateY(${style.y}px)`;
+    item.style.zIndex = style.z;
+    // Margin für das Überlappen
+    item.style.marginRight = "-40px"; 
+}
+
+// --- INITIALISIEREN ---
+// Sobald die Seite geladen ist:
+window.addEventListener('DOMContentLoaded', () => {
+    // Film Track normal
+    initScatterMarquee('film-track', false);
+    
+    // Musik Track rückwärts (optional, sieht cool aus)
+    initScatterMarquee('music-track', true);
+});
