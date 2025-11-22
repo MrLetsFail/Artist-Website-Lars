@@ -211,3 +211,71 @@ footer {
     40% {transform: translateX(-50%) translateY(-10px);}
     60% {transform: translateX(-50%) translateY(-5px);}
 }
+
+/* --- CAROUSEL LAYOUT --- */
+
+/* Der Container, der das Scrollen erlaubt */
+.carousel-container {
+    width: 100%;
+    overflow-x: auto; /* Scrollbar erlauben */
+    overflow-y: hidden;
+    cursor: grab; /* Zeigt an, dass man ziehen kann */
+    padding-bottom: 50px; /* Platz für Hover-Effekte */
+    
+    /* Scrollbar verstecken (Chrome, Safari, Opera) */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-container:active {
+    cursor: grabbing; /* Cursor ändert sich beim Greifen */
+}
+
+/* Die Bahn, auf der die Items liegen */
+.carousel-track {
+    display: flex;
+    gap: 30px;
+    padding-left: 5%; /* Padding links damit es nicht am Rand klebt */
+    padding-right: 5%;
+    width: max-content; /* Wichtig: Nimmt so viel Platz wie nötig */
+}
+
+.carousel-item {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    flex-shrink: 0; /* Verhindert, dass Items gequetscht werden */
+}
+
+.carousel-item:hover {
+    transform: scale(0.98);
+    filter: brightness(1.1);
+}
+
+/* FILM KARTEN (Breitbild 16:9) */
+.video-card {
+    width: 500px;
+    height: 280px;
+}
+
+/* MUSIK KARTEN (Quadratisch) */
+.square-card {
+    width: 350px;
+    height: 350px;
+}
+
+/* Mobile Anpassung */
+@media (max-width: 768px) {
+    .video-card { width: 300px; height: 170px; }
+    .square-card { width: 250px; height: 250px; }
+    .carousel-track { gap: 15px; }
+}
+
+/* Alte Grid Styles können weg oder bleiben, falls du sie woanders brauchst */
