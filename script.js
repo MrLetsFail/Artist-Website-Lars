@@ -1,32 +1,30 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 
-// --- SETUP THREE.JS (Die Optik) ---
+// --- SETUP THREE.JS ---
 const canvasContainer = document.getElementById('canvas-container');
 const scene = new THREE.Scene();
-// Dunkler Nebel, damit Objekte in der Tiefe verschwinden
-scene.fog = new THREE.Fog(0x0e0e0e, 15, 25);
+scene.fog = new THREE.Fog(0x0e0e0e, 20, 35); // Nebel etwas weiter weg geschoben
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.set(0, 0, 18); // Kamera etwas weiter weg
+camera.position.set(0, 0, 20);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true; // Schatten aktivieren für mehr Tiefe
+renderer.shadowMap.enabled = true;
 canvasContainer.appendChild(renderer.domElement);
 
-// --- SETUP CANNON.JS (Die Physik) ---
+// --- SETUP CANNON.JS ---
 const world = new CANNON.World();
-world.gravity.set(0, 0, 0); // Schwerelosigkeit
+world.gravity.set(0, 0, 0); 
 world.broadphase = new CANNON.SAPBroadphase(world);
 world.allowSleep = true;
 
-// Physische Materialien (wie "bouncy" sind die Objekte?)
 const defaultMaterial = new CANNON.Material('default');
 const defaultContactMaterial = new CANNON.ContactMaterial(defaultMaterial, defaultMaterial, {
-    friction: 0.1,      // Wenig Reibung
-    restitution: 0.9    // Hohe Sprungkraft (bouncy)
+    friction: 0.2,      // Etwas mehr Reibung für mehr Kontrolle
+    restitution: 0.7    // Weniger "Bouncy", wirkt wertiger
 });
 world.addContactMaterial(defaultContactMaterial);
 
@@ -39,50 +37,43 @@ dirLight.position.set(5, 10, 7);
 dirLight.castShadow = true;
 scene.add(dirLight);
 
-const pointLight = new THREE.PointLight(0xff5796, 0.5); // Pinkes Zusatzlicht
+const pointLight = new THREE.PointLight(0xff5796, 0.8); 
 pointLight.position.set(-5, 5, 5);
 scene.add(pointLight);
 
-// --- OBJEKTE ERSTELLEN ---
-const objectsToUpdate = []; // Array speichert Paare von { mesh, body }
-
-// Deine Neon-Farben
+// --- OBJEKTE ---
+const objectsToUpdate = [];
 const colors = [0xff5796, 0x00e6c3, 0xffdf3c]; 
 
-// Geometrien (Three.js)
 const boxGeo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
 const sphereGeo = new THREE.SphereGeometry(1, 32, 32);
 const torusGeo = new THREE.TorusGeometry(0.8, 0.35, 16, 100);
 const coneGeo = new THREE.ConeGeometry(1, 2, 32);
 
 const createObject = (position) => {
-    // 1. Zufällige Auswahl von Form und Farbe
     const color = colors[Math.floor(Math.random() * colors.length)];
-    const type = Math.floor(Math.random() * 4); // 0-3
+    const type = Math.floor(Math.random() * 4);
     
     let geometry, shape;
-
-    // Physik-Formen müssen zur Optik passen
     switch(type) {
-        case 0: // Würfel
+        case 0: 
             geometry = boxGeo;
-            shape = new CANNON.Box(new CANNON.Vec3(0.75, 0.75, 0.75)); // Hälfte der Größe
+            shape = new CANNON.Box(new CANNON.Vec3(0.75, 0.75, 0.75));
             break;
-        case 1: // Kugel
+        case 1: 
             geometry = sphereGeo;
             shape = new CANNON.Sphere(1);
             break;
-        case 2: // Donut (Torus ist physikalisch komplex, wir nehmen eine Kugel als Hitbox für Performance)
+        case 2: 
             geometry = torusGeo;
             shape = new CANNON.Sphere(1); 
             break;
-        default: // Kegel (wir nehmen einen Zylinder als Hitbox, das ist stabiler)
+        default: 
             geometry = coneGeo;
             shape = new CANNON.Cylinder(0, 1, 2, 8);
             break;
     }
 
-    // 2. Three.js Mesh (Das Auge sieht das)
     const material = new THREE.MeshStandardMaterial({ 
         color: color, 
         roughness: 0.3,
@@ -94,7 +85,6 @@ const createObject = (position) => {
     mesh.position.copy(position);
     scene.add(mesh);
 
-    // 3. Cannon.js Body (Die Physik berechnet das)
     const body = new CANNON.Body({
         mass: 1,
         position: new CANNON.Vec3(position.x, position.y, position.z),
@@ -102,101 +92,109 @@ const createObject = (position) => {
         material: defaultMaterial
     });
     
-    // Zufällige Anfangsrotation und leichter Drift
-    body.angularVelocity.set(
-        (Math.random() - 0.5) * 2,
-        (Math.random() - 0.5) * 2,
-        (Math.random() - 0.5) * 2
-    );
-    body.velocity.set(
-        (Math.random() - 0.5) * 0.5,
-        (Math.random() - 0.5) * 0.5,
-        (Math.random() - 0.5) * 0.5
-    );
-    
-    // Dämpfung, damit sie nicht ewig schnell werden
-    body.linearDamping = 0.3; 
-    body.angularDamping = 0.3;
+    body.angularVelocity.set((Math.random()-0.5)*2, (Math.random()-0.5)*2, (Math.random()-0.5)*2);
+    body.velocity.set((Math.random()-0.5)*0.5, (Math.random()-0.5)*0.5, (Math.random()-0.5)*0.5);
+    body.linearDamping = 0.5;  // Objekte bremsen schneller ab (Space-Vibe)
+    body.angularDamping = 0.5;
 
     world.addBody(body);
-
-    // Speichern für Loop
     objectsToUpdate.push({ mesh, body });
 };
 
-// Erzeuge 12 Objekte verteilt im Raum (nicht mehr alle in der Mitte)
+// Objekte initial erzeugen
 for(let i=0; i < 15; i++){
     createObject({
-        x: (Math.random() - 0.5) * 12, 
-        y: (Math.random() - 0.5) * 12, 
-        z: (Math.random() - 0.5) * 5
+        x: (Math.random() - 0.5) * 10, 
+        y: (Math.random() - 0.5) * 10, 
+        z: (Math.random() - 0.5) * 4
     });
 }
 
-// --- UNSICHTBARE WÄNDE (Damit nichts wegfliegt) ---
-// Wir bauen eine Box aus 6 Wänden
-const createWall = (position, size) => {
+// --- DYNAMISCHE WÄNDE ---
+// Wir speichern die Physics-Bodies der Wände, um sie beim Resize zu updaten
+const walls = {};
+
+const createWall = (name, position, size) => {
     const body = new CANNON.Body({
-        mass: 0, // 0 Masse = Statisch (bewegt sich nicht)
+        mass: 0, // Statisch
         material: defaultMaterial
     });
     body.addShape(new CANNON.Box(new CANNON.Vec3(size.x, size.y, size.z)));
     body.position.copy(position);
     world.addBody(body);
+    walls[name] = body;
+};
+
+// Funktion zur Berechnung der Bildschirm-Grenzen in 3D-Koordinaten
+function updateWalls() {
+    // Distanz von Kamera zu z=0
+    const distance = camera.position.z;
+    // Sichtfeld-Höhe bei z=0 berechnen
+    const vFOV = THREE.MathUtils.degToRad(camera.fov); 
+    const height = 2 * Math.tan(vFOV / 2) * distance;
+    const width = height * camera.aspect;
+
+    const w = width / 2;
+    const h = height / 2;
+    const thickness = 1; // Dicke der unsichtbaren Wände
+
+    // Wände neu positionieren (Exakt am Rand)
+    if(walls.left) {
+        walls.left.position.set(-w - thickness, 0, 0);
+        walls.right.position.set(w + thickness, 0, 0);
+        walls.top.position.set(0, h + thickness, 0);
+        walls.bottom.position.set(0, -h - thickness, 0);
+    } else {
+        // Erstes Mal erstellen
+        createWall('left',   {x: -w - thickness, y: 0, z: 0}, {x: thickness, y: h*2, z: 10});
+        createWall('right',  {x: w + thickness, y: 0, z: 0},  {x: thickness, y: h*2, z: 10});
+        createWall('top',    {x: 0, y: h + thickness, z: 0},  {x: w*2, y: thickness, z: 10});
+        createWall('bottom', {x: 0, y: -h - thickness, z: 0}, {x: w*2, y: thickness, z: 10});
+        
+        // Vorne und Hinten (feste Tiefe)
+        createWall('back',   {x: 0, y: 0, z: -8},             {x: w*2, y: h*2, z: 1}); // Hinten (Limiter)
+        createWall('front',  {x: 0, y: 0, z: 10},             {x: w*2, y: h*2, z: 1}); // Vorne (Glas)
+    }
 }
 
-// Wände platzieren (Links, Rechts, Oben, Unten, Vorne, Hinten)
-createWall({x: -9, y: 0, z: 0}, {x: 0.1, y: 20, z: 10}); // Links
-createWall({x: 9, y: 0, z: 0}, {x: 0.1, y: 20, z: 10});  // Rechts
-createWall({x: 0, y: 9, z: 0}, {x: 20, y: 0.1, z: 10});  // Oben
-createWall({x: 0, y: -9, z: 0}, {x: 20, y: 0.1, z: 10}); // Unten
-createWall({x: 0, y: 0, z: -5}, {x: 20, y: 20, z: 0.1}); // Hinten
-createWall({x: 0, y: 0, z: 8}, {x: 20, y: 20, z: 0.1});  // Vorne (Glas)
+// Initial aufrufen
+updateWalls();
 
-// --- INTERAKTION (Wegdrücken) ---
+// --- INTERAKTION ---
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-const mouseSpeed = new THREE.Vector2(); // Wie schnell bewegt sich die Maus?
+const mouseSpeed = new THREE.Vector2();
 let lastMousePosition = { x: 0, y: 0 };
 
 window.addEventListener('mousemove', (event) => {
-    // Mausposition normalisieren (-1 bis +1)
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-    // Maus-Geschwindigkeit berechnen
     mouseSpeed.x = event.clientX - lastMousePosition.x;
     mouseSpeed.y = event.clientY - lastMousePosition.y;
     lastMousePosition = { x: event.clientX, y: event.clientY };
 
-    // Prüfen, ob wir ein Objekt berühren
     raycaster.setFromCamera(mouse, camera);
-    
-    // Wir testen nur die Meshes aus unserem Array
     const intersects = raycaster.intersectObjects(objectsToUpdate.map(obj => obj.mesh));
 
     if (intersects.length > 0) {
-        // Das erste getroffene Objekt
         const hitObject = intersects[0].object;
-        
-        // Das zugehörige Physik-Objekt finden
         const item = objectsToUpdate.find(i => i.mesh === hitObject);
         
         if (item) {
-            // IMPULS GEBEN (Wegkicken)
-            // Wir drücken es in die Richtung der Mausbewegung + etwas weg von der Kamera
-            const force = 30; // Stärke des Stoßes
+            item.body.wakeUp();
+            // FORCE UPDATE: Jetzt sanfter (Faktor 0.05 statt 0.2)
+            const forceMultiplier = 0.05; 
             
-            item.body.wakeUp(); // Falls es "eingeschlafen" ist
             item.body.applyImpulse(
-                new CANNON.Vec3(mouseSpeed.x * 0.2, -mouseSpeed.y * 0.2, -10), // Kraft-Vektor
-                new CANNON.Vec3(0, 0, 0) // Punkt am Objekt (Mitte)
+                new CANNON.Vec3(mouseSpeed.x * forceMultiplier, -mouseSpeed.y * forceMultiplier, -2), 
+                new CANNON.Vec3(0, 0, 0)
             );
         }
     }
 });
 
-// --- ANIMATION LOOP ---
+// --- ANIMATION ---
 const clock = new THREE.Clock();
 let oldElapsedTime = 0;
 
@@ -205,10 +203,8 @@ const tick = () => {
     const deltaTime = elapsedTime - oldElapsedTime;
     oldElapsedTime = elapsedTime;
 
-    // Physik updaten (60fps)
     world.step(1 / 60, deltaTime, 3);
 
-    // Positionen synchronisieren (Physik -> Optik)
     for (const object of objectsToUpdate) {
         object.mesh.position.copy(object.body.position);
         object.mesh.quaternion.copy(object.body.quaternion);
@@ -225,4 +221,7 @@ window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    // WICHTIG: Wände beim Resizen neu berechnen
+    updateWalls();
 });
