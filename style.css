@@ -1,157 +1,161 @@
-body {
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: lightpink;
-}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lars | Creative Producer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
 
-.block {
-    background-color: #f2f2f2;
-    padding: 10px;
-    cursor: move;
-    user-select: none;
-    position: absolute;
-}
+    <section class="hero-section">
+        <div id="canvas-container"></div>
+        <div class="hero-overlay">
+            <h1>LARS<span class="dot">.</span></h1>
+            <p>Creative Producer &amp; Motion Designer</p>
+            <div class="scroll-indicator">↓ Scroll</div>
+        </div>
+    </section>
 
-/* Links */
-a {
-    color: #4CAF50; /* Grüne Farbe */
-    text-decoration: none;
-    transition: color 0.3s ease; /* Weiche Farbübergänge */
-}
+    <div class="smooth-wrapper">
+        
+        <section class="projects-section" id="work">
+            <div class="section-header">
+                <h2>Selected Works</h2>
+                <span class="category-label">Film & Motion</span>
+            </div>
 
-a:hover {
-    color: #2196F3; /* Blaue Farbe beim Hover */
-}
+            <div class="gallery-grid">
+                
+                <a href="projekte/dexter.html" class="grid-item large">
+                    <div class="media-container">
+                        <div class="placeholder-img pink"></div> 
+                        <div class="hover-info">
+                            <h3>Dexter Intro</h3>
+                            <p>Reconstruction</p>
+                        </div>
+                    </div>
+                </a>
 
-/* Listen */
-ul {
-    list-style-type: none; /* Keine Aufzählungspunkte */
-    padding: 0;
-}
+                <a href="projekte/ort-voller-leben.html" class="grid-item">
+                    <div class="media-container">
+                        <div class="placeholder-img turquoise"></div>
+                        <div class="hover-info">
+                            <h3>Ein Ort voller Leben</h3>
+                            <p>Miniserie</p>
+                        </div>
+                    </div>
+                </a>
 
-li {
-    margin-bottom: 10px; /* Abstand zwischen den Listenpunkten */
-    list-style: none;
-}
+                <a href="projekte/tuer-und-angel.html" class="grid-item vertical">
+                    <div class="media-container">
+                        <div class="placeholder-img yellow"></div>
+                        <div class="hover-info">
+                            <h3>Zwischen Tür und Angel</h3>
+                            <p>Kurzfilm Regie</p>
+                        </div>
+                    </div>
+                </a>
 
-/* Hervorgehobene Listenpunkte */
-.highlight {
-    color: #FFC107; /* Gelbe Farbe */
-    font-weight: bold; /* Fette Schrift */
-}
+                <a href="projekte/life-mp4.html" class="grid-item">
+                    <div class="media-container">
+                        <div class="placeholder-img pink"></div>
+                        <div class="hover-info">
+                            <h3>Life.mp4</h3>
+                            <p>Concept Art</p>
+                        </div>
+                    </div>
+                </a>
 
-.box {
-    background-color: #f5f5f5; /* Hintergrundfarbe */
-    padding: 20px; /* Innenabstand */
-    border-radius: 10px; /* Abgerundete Ecken */
-    margin-bottom: 20px; /* Abstand nach unten */
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.7); /* Schlagschatten */
-}
+                <a href="projekte/lovely-day.html" class="grid-item">
+                    <div class="media-container">
+                        <div class="placeholder-img turquoise"></div>
+                        <div class="hover-info">
+                            <h3>Lovely Day</h3>
+                            <p>Semesterprojekt</p>
+                        </div>
+                    </div>
+                </a>
 
-img {
-    height: auto;
-    max-width: 100%;
-    max-height: 350px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    display: block;
-    margin: 10px auto;
+                 <a href="projekte/maessigkeit.html" class="grid-item">
+                    <div class="media-container">
+                        <div class="placeholder-img yellow"></div>
+                        <div class="hover-info">
+                            <h3>Mäßigkeit</h3>
+                            <p>Motion Loop</p>
+                        </div>
+                    </div>
+                </a>
 
-    pointer-events: none;
-}
+            </div>
+        </section>
 
-.cursor {
-    cursor: default;
-}
+        <section class="projects-section secondary-section" id="playground">
+            <div class="section-header">
+                <h2>Playground</h2>
+                <span class="category-label">Musik & Audio</span>
+            </div>
 
-/* Galerie-Stil */
-.gallery {
-    position: relative;
-    max-width: 600px; /* Maximale Breite beibehalten */
-    height: auto;
-    overflow: hidden;
-    margin: 20px auto;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+            <div class="gallery-grid">
+                
+                <a href="projekte/gefaengnisvibes.html" class="grid-item">
+                    <div class="media-container">
+                        <div class="placeholder-img pink"></div>
+                        <div class="hover-info">
+                            <h3>Gefängnisvibes</h3>
+                            <p>Musikvideo</p>
+                        </div>
+                    </div>
+                </a>
 
-.gallery img {
-    max-width: 100%;
-    height: auto;
-    max-height: 700px;
-    object-fit: contain;
-    display: none;
-    cursor: pointer;
-}
+                <a href="projekte/augen-auf.html" class="grid-item large">
+                    <div class="media-container">
+                        <div class="placeholder-img turquoise"></div>
+                        <div class="hover-info">
+                            <h3>Augen auf und durch</h3>
+                            <p>Mixtape</p>
+                        </div>
+                    </div>
+                </a>
 
-.gallery img.active {
-    display: block;
-}
+                <a href="projekte/leben-laeuft.html" class="grid-item">
+                    <div class="media-container">
+                        <div class="placeholder-img yellow"></div>
+                        <div class="hover-info">
+                            <h3>Leben läuft</h3>
+                            <p>Production</p>
+                        </div>
+                    </div>
+                </a>
 
-.gallery .prev, .gallery .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
+            </div>
+        </section>
 
-.gallery .prev { left: 10px; }
-.gallery .next { right: 10px; }
+        <footer>
+            <div class="footer-content">
+                <h3>Let's create together.</h3>
+                <a href="mailto:lars.kaster@gmx.de" class="email-link">lars.kaster@gmx.de</a>
+                <div class="socials">
+                    <a href="#">Instagram</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+                <p class="copyright">© 2025 Lars Kaster</p>
+            </div>
+        </footer>
+    </div>
 
-/* Fullscreen-Ansicht */
-.fullscreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.fullscreen img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-}
-
-@media screen and (max-width: 768px) {
-    body {
-        font-size: 16px;
-        overflow-y: auto;
-    }
-
-    .box {
-        padding: 15px;
-    }
-
-    .block {
-        position: static;
-        width: auto;
-        margin: 10px;
-        cursor: default;
-    }
-}
-
-/* Small Mobile Styles */
-@media screen and (max-width: 480px) {
-    body {
-        font-size: 14px;
-    }
-
-    .box {
-        padding: 10px;
-    }
-}
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
