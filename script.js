@@ -225,3 +225,37 @@ window.addEventListener('resize', () => {
     // WICHTIG: Wände beim Resizen neu berechnen
     updateWalls();
 });
+
+
+// --- DRAGGABLE SLIDER LOGIC ---
+const sliders = document.querySelectorAll('.carousel-container');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+sliders.forEach(slider => {
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault(); // Verhindert Text-Markieren etc.
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2; // *2 für schnellere Scroll-Geschwindigkeit
+        slider.scrollLeft = scrollLeft - walk;
+    });
+});
