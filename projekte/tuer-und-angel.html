@@ -3,81 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projekt Details</title>
-    <link rel="stylesheet" href="../style.css"> <style>
-        /* Spezifische Styles für Detailseite */
-        .project-hero {
-            padding-top: 150px;
-            padding-bottom: 50px;
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 30px;
-            color: var(--accent-turquoise);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .project-title {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-        .project-meta {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 50px;
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-        .media-showcase {
-            width: 100%;
-            margin-bottom: 50px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .media-showcase img, .media-showcase iframe {
-            width: 100%;
-            display: block;
-        }
-        .media-showcase iframe {
-            height: 600px; /* Video Höhe */
-        }
-        .project-text {
-            max-width: 800px;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
+    <title>Zwischen Tür und Angel | Lars Portfolio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: var(--bg-color); color: white; overflow-x: hidden; }
+        .project-hero { padding: 120px 5% 50px; max-width: 1200px; margin: 0 auto; animation: fadeIn 1s ease; }
+        .back-btn { display: inline-flex; align-items: center; margin-bottom: 40px; color: var(--accent-turquoise); text-decoration: none; font-weight: 600; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .project-title { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; font-weight: 800; }
+        .project-meta { display: flex; gap: 30px; margin-bottom: 50px; opacity: 0.7; font-family: monospace; flex-wrap: wrap; }
+        .media-showcase { width: 100%; aspect-ratio: 16/9; margin-bottom: 50px; border-radius: 4px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); background: #000; }
+        .media-showcase iframe { width: 100%; height: 100%; }
+        .project-text { max-width: 800px; font-size: 1.2rem; line-height: 1.8; opacity: 0.9; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-
     <div class="project-hero">
-        <a href="../index.html" class="back-btn">← Zurück zur Übersicht</a>
-        
-        <h1 class="project-title">Dexter Intro Reconstruction</h1>
-        
+        <a href="../index.html#work" class="back-btn">← Zurück zur Übersicht</a>
+        <h1 class="project-title">Zwischen Tür und Angel</h1>
         <div class="project-meta">
-            <span>Rolle: Motion Design</span>
-            <span>Jahr: 2023</span>
-            <span>Tools: After Effects</span>
+            <span>TYPE: KURZFILM</span>
+            <span>ROLE: REGIE, DREHBUCH, EDIT</span>
+            <span>YEAR: 2024</span>
         </div>
-
         <div class="media-showcase">
-            <iframe src="https://www.youtube.com/embed/Vr6uZ7TBBnw" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/hWSmRNEUFUs" frameborder="0" allowfullscreen></iframe>
         </div>
-
         <div class="project-text">
-            <p>Hier kommt der Beschreibungstext hin. Beschreibe, was deine Aufgabe war, welche Herausforderungen du hattest und wie du sie gelöst hast.</p>
+            <p>Ein Kurzfilm-Projekt, bei dem ich die volle kreative Verantwortung trug – vom Schreiben des Drehbuchs über die Regie am Set bis hin zur finalen Postproduction.</p>
         </div>
     </div>
-
-    <footer>
-        <p>© 2025 Lars Kaster</p>
-    </footer>
-
 </body>
 </html>
