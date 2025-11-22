@@ -109,12 +109,16 @@ h1 {
     color: var(--accent-turquoise);
 }
 
-/* --- INFINITE MARQUEE --- */
+/* --- INFINITE MARQUEE (SCATTER STYLE) --- */
 .marquee-container {
     width: 100%;
+    height: 600px; /* Container muss höher sein für das "Auf und Ab" */
     overflow: hidden;
     position: relative;
-    padding-bottom: 50px; /* Platz für Hover-Effekt */
+    display: flex;
+    align-items: center; /* Zentriert den Stream vertikal */
+    background-color: var(--bg-color);
+    
     /* Weicher Rand links und rechts */
     mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
@@ -122,101 +126,127 @@ h1 {
 
 .marquee-track {
     display: flex;
-    gap: 30px;
+    align-items: center; /* Basis-Linie ist die Mitte */
     width: max-content;
-    /* 60 Sekunden für einen kompletten Durchlauf */
-    animation: scroll 60s linear infinite;
-}
-
-/* Optional: Musik in die andere Richtung laufen lassen */
-.marquee-track.reverse-scroll {
-    animation: scroll-reverse 60s linear infinite;
+    padding: 50px 0; /* Puffer oben/unten */
+    /* 80 Sekunden für einen langsamen, entspannten Flow */
+    animation: scroll 80s linear infinite;
 }
 
 .marquee-track:hover {
-    animation-play-state: paused; /* Anhalten beim Drüberfahren */
+    animation-play-state: paused;
 }
 
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Verschiebt um die Hälfte (ein Set) */
-}
-
-@keyframes scroll-reverse {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-}
-
-/* --- CARDS --- */
+/* --- SCATTER CARDS (Das "Chaos" Design) --- */
 .carousel-item {
     position: relative;
     display: block;
     text-decoration: none;
-    border-radius: 12px;
+    border-radius: 4px; /* Weniger Radius passt besser zum Block-Look im Bild */
     overflow: hidden;
-    transition: transform 0.4s ease, filter 0.4s ease;
     flex-shrink: 0;
+    transition: transform 0.4s ease, z-index 0.4s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    
+    /* BASIS: Alle sind QUADRATISCH */
+    aspect-ratio: 1 / 1;
+    width: 300px; /* Standardgröße */
+    
+    /* WICHTIG: Negativer Margin sorgt für das Überlappen (wie im Bild) */
+    margin-right: -40px; 
 }
 
 .carousel-item:hover {
-    transform: scale(0.98);
-    filter: brightness(1.1);
+    transform: scale(1.05) !important; /* Überschreibt die Positionierung beim Hover leicht */
+    z-index: 100 !important; /* Hovertes Element immer ganz nach vorne */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border: 2px solid white;
 }
 
-/* Film: Breitbild 16:9 */
-.video-card {
-    width: 500px;
-    height: 280px;
+/* --- DAS MUSTER (Nachbau des Screenshots) --- */
+/* Wir erstellen einen Loop aus 6 verschiedenen Positionen, der sich wiederholt */
+
+/* 1. Element (Links oben im Bild - Türkis/Blau) */
+.carousel-item:nth-child(6n + 1) {
+    width: 280px;
+    transform: translateY(-80px); /* Nach oben verschoben */
+    z-index: 1;
 }
 
-/* Musik: Quadratisch */
-.square-card {
+/* 2. Element (Unten links - Klein) */
+.carousel-item:nth-child(6n + 2) {
+    width: 200px; /* Kleiner */
+    transform: translateY(100px); /* Weit nach unten */
+    z-index: 2;
+    margin-left: -20px; /* Zieht es noch näher an das vorherige */
+}
+
+/* 3. Element (Die große rote Box im Bild) */
+.carousel-item:nth-child(6n + 3) {
+    width: 380px; /* Richtig groß */
+    transform: translateY(60px); /* Leicht nach unten */
+    z-index: 3; /* Liegt über den anderen */
+}
+
+/* 4. Element (Der grüne Block oben) */
+.carousel-item:nth-child(6n + 4) {
+    width: 320px;
+    transform: translateY(-100px); /* Sehr weit oben */
+    z-index: 1;
+    margin-right: -60px; /* Starkes Überlappen zum nächsten */
+}
+
+/* 5. Element (Braun/Mitte - im Bild klein) */
+.carousel-item:nth-child(6n + 5) {
+    width: 220px;
+    transform: translateY(20px); /* Fast mittig */
+    z-index: 2;
+}
+
+/* 6. Element (Lila/Rechts - Groß unten) */
+.carousel-item:nth-child(6n + 6) {
     width: 350px;
-    height: 350px;
+    transform: translateY(90px); /* Unten */
+    z-index: 4;
 }
 
 /* --- MEDIA CONTENT --- */
+/* Bilder füllen immer das Quadrat aus */
 .media-container {
     width: 100%;
     height: 100%;
     background-color: var(--card-bg);
-    position: relative;
 }
 
 .placeholder-img {
     width: 100%;
     height: 100%;
-    opacity: 0.2;
+    opacity: 0.6; /* Etwas deckender für den "Block"-Look */
     transition: opacity 0.3s ease;
 }
 
-.placeholder-img.pink { background-color: var(--accent-pink); }
-.placeholder-img.turquoise { background-color: var(--accent-turquoise); }
-.placeholder-img.yellow { background-color: var(--accent-yellow); }
+/* Optional: Farben anpassen, damit sie mehr knallen wie im Bild */
+.placeholder-img.pink { background-color: #b55a80; } /* Ähnlich dem Lila im Bild */
+.placeholder-img.turquoise { background-color: #5ab5a8; } /* Ähnlich dem Türkis */
+.placeholder-img.yellow { background-color: #b5a85a; } /* Ähnlich dem Braun/Gelb */
 
-.carousel-item:hover .placeholder-img { opacity: 0.4; }
 
-.hover-info {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    z-index: 2;
+/* --- MOBILE ANPASSUNG --- */
+@media (max-width: 768px) {
+    .marquee-container {
+        height: 400px; /* Auf Handy nicht ganz so hoch */
+    }
+    
+    /* Auf Handy alles etwas kleiner skalieren */
+    .carousel-item { width: 200px; margin-right: -20px; }
+    
+    .carousel-item:nth-child(6n + 1) { width: 180px; transform: translateY(-40px); }
+    .carousel-item:nth-child(6n + 2) { width: 140px; transform: translateY(60px); }
+    .carousel-item:nth-child(6n + 3) { width: 240px; transform: translateY(30px); }
+    .carousel-item:nth-child(6n + 4) { width: 200px; transform: translateY(-60px); }
+    .carousel-item:nth-child(6n + 5) { width: 150px; transform: translateY(10px); }
+    .carousel-item:nth-child(6n + 6) { width: 220px; transform: translateY(50px); }
 }
-
-.hover-info h3 {
-    color: white;
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.hover-info p {
-    color: var(--accent-turquoise);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
 /* --- FOOTER --- */
 footer {
     background-color: var(--bg-color);
