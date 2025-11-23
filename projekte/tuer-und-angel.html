@@ -9,30 +9,99 @@
     <style>
         body { background-color: var(--bg-color); color: white; overflow-x: hidden; }
         .project-hero { padding: 120px 5% 50px; max-width: 1200px; margin: 0 auto; animation: fadeIn 1s ease; }
+        
         .back-btn { display: inline-flex; align-items: center; margin-bottom: 40px; color: var(--accent-turquoise); text-decoration: none; font-weight: 600; transition: transform 0.3s; }
         .back-btn:hover { transform: translateX(-5px); }
+        
         .project-title { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; font-weight: 800; }
-        .project-meta { display: flex; gap: 30px; margin-bottom: 50px; opacity: 0.7; font-family: monospace; flex-wrap: wrap; }
-        .media-showcase { width: 100%; aspect-ratio: 16/9; margin-bottom: 50px; border-radius: 4px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); background: #000; }
+        
+        .project-meta { display: flex; gap: 30px; margin-bottom: 50px; opacity: 0.8; font-family: monospace; flex-wrap: wrap; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
+        .meta-item { display: flex; flex-direction: column; }
+        .meta-label { font-size: 0.8rem; color: var(--accent-pink); margin-bottom: 5px; }
+        
+        .media-showcase { width: 100%; aspect-ratio: 16/9; margin-bottom: 80px; border-radius: 4px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); background: #000; }
         .media-showcase iframe { width: 100%; height: 100%; }
-        .project-text { max-width: 800px; font-size: 1.2rem; line-height: 1.8; opacity: 0.9; }
+        
+        /* Text Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-bottom: 80px; }
+        .text-block h2 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent-yellow); }
+        .text-block p { font-size: 1.1rem; line-height: 1.8; opacity: 0.9; margin-bottom: 20px; }
+        
+        /* Highlight Box für One Shot Info */
+        .highlight-box {
+            grid-column: span 2;
+            background: rgba(255, 223, 60, 0.05);
+            border: 1px solid var(--accent-yellow);
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .highlight-box h3 { color: var(--accent-yellow); margin-bottom: 10px; font-size: 1.2rem; }
+        .highlight-box p { margin-bottom: 0; font-size: 1rem; opacity: 0.8; }
+
+        .next-project { padding: 50px 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: right; }
+        .next-link { text-decoration: none; color: white; font-size: 2rem; font-weight: 700; transition: color 0.3s; }
+        .next-link span { display: block; font-size: 0.9rem; color: var(--accent-pink); font-weight: 400; margin-bottom: 10px; font-family: monospace;}
+        .next-link:hover { color: var(--accent-pink); }
+
+        @media (max-width: 768px) { 
+            .content-grid { grid-template-columns: 1fr; gap: 30px; } 
+            .highlight-box { grid-column: span 1; }
+        }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="project-hero">
         <a href="../index.html#work" class="back-btn">← Zurück zur Übersicht</a>
+        
         <h1 class="project-title">Zwischen Tür und Angel</h1>
+        
         <div class="project-meta">
-            <span>TYPE: KURZFILM</span>
-            <span>ROLE: REGIE, DREHBUCH, EDIT</span>
-            <span>YEAR: 2024</span>
+            <div class="meta-item">
+                <span class="meta-label">TYP</span>
+                <span>Kurzfilm (One-Shot Illusion)</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">ROLLE</span>
+                <span>Regie, Drehbuch, Edit, Grading</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">ZEITRAUM</span>
+                <span>4 Tage (1 Dreh, 3 Post)</span>
+            </div>
         </div>
+
+        <!-- HAUPTVIDEO -->
         <div class="media-showcase">
             <iframe src="https://www.youtube.com/embed/hWSmRNEUFUs" frameborder="0" allowfullscreen></iframe>
         </div>
-        <div class="project-text">
-            <p>Ein Kurzfilm-Projekt, bei dem ich die volle kreative Verantwortung trug – vom Schreiben des Drehbuchs über die Regie am Set bis hin zur finalen Postproduction.</p>
+
+        <!-- BESCHREIBUNG -->
+        <div class="content-grid">
+            <div class="text-block">
+                <h2>Konzept & Vision</h2>
+                <p>Eine Zeitschleife als Metapher für existenzielle Angst: Die Protagonistin ist gefangen in einem Moment, dreht sich im Kreis und kommt im Leben nicht weiter. Um dieses Gefühl der Ausweglosigkeit visuell zu verstärken, entschied ich mich für das Stilmittel des "Fake One-Shots".</p>
+                <p>Obwohl es nur eine Kameraperspektive gibt, sehen wir die Protagonistin am Ende doppelt – ein logischer Bruch, der durch versteckte Schnitte (Invisible Cuts) realisiert wurde.</p>
+            </div>
+            <div class="text-block">
+                <h2>Produktion & Herausforderung</h2>
+                <p>Da ich Drehbuch, Regie und Postproduction selbst übernahm, konnte ich die Vision effizient umsetzen: Der Dreh war dank präziser Planung an nur einem Tag im Kasten. </p>
+                <p>Die größte Hürde lauerte in der Postproduction (Adobe Premiere): Da wir den Raum nicht vollständig abdunkeln konnten, veränderte sich das Tageslicht über die Stunden. Das Color Grading war daher entscheidend, um trotz wechselnder Lichtverhältnisse einen konsistenten Look zu erschaffen und die Illusion der Echtzeit aufrechtzuerhalten.</p>
+            </div>
+
+            <!-- TECH HIGHLIGHT -->
+            <div class="highlight-box">
+                <h3>Technical Insight: Der "Invisible Cut"</h3>
+                <p>Um die Illusion einer einzigen, ununterbrochenen Aufnahme zu erzeugen, wurden die Übergänge zwischen den Takes maskiert. Dies erforderte präzises Timing am Set und genaues Matching in der Postproduction, damit die Bewegungen der Schauspielerin nahtlos ineinander übergehen.</p>
+            </div>
+        </div>
+
+        <div class="next-project">
+            <a href="life-mp4.html" class="next-link">
+                <span>Nächstes Projekt</span>
+                Life.mp4 →
+            </a>
         </div>
     </div>
 </body>
