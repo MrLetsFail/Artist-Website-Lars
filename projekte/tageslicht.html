@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dexter Intro | Lars Portfolio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: var(--bg-color); color: white; overflow-x: hidden; }
+        .project-hero { padding: 120px 5% 50px; max-width: 1200px; margin: 0 auto; animation: fadeIn 1s ease; }
+        
+        .back-btn { display: inline-flex; align-items: center; margin-bottom: 40px; color: var(--accent-turquoise); text-decoration: none; font-weight: 600; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        
+        .project-title { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; font-weight: 800; }
+        
+        .project-meta { display: flex; gap: 30px; margin-bottom: 50px; opacity: 0.8; font-family: monospace; flex-wrap: wrap; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
+        .meta-item { display: flex; flex-direction: column; }
+        .meta-label { font-size: 0.8rem; color: var(--accent-pink); margin-bottom: 5px; }
+        
+        .media-showcase { width: 100%; aspect-ratio: 16/9; margin-bottom: 80px; border-radius: 4px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); background: #000; }
+        .media-showcase iframe { width: 100%; height: 100%; }
+        
+        /* Text Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-bottom: 80px; }
+        .text-block h2 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent-turquoise); }
+        .text-block p { font-size: 1.1rem; line-height: 1.8; opacity: 0.9; margin-bottom: 20px; }
+        
+        /* PINTEREST STYLE GALLERY */
+        .gallery-section h2 { font-size: 1.5rem; margin-bottom: 30px; color: var(--accent-yellow); }
+        
+        .gallery-masonry {
+            column-count: 2; /* 2 Spalten Standard */
+            column-gap: 20px;
+        }
+        
+        .gallery-item {
+            break-inside: avoid; /* Verhindert, dass Bilder in der Mitte durchgeschnitten werden */
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: zoom-in;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            filter: brightness(1.1);
+        }
+
+        /* LIGHTBOX (Vollbild Ansicht) */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 4px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-lightbox:hover { color: var(--accent-pink); }
+
+        .next-project { padding: 50px 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: right; }
+        .next-link { text-decoration: none; color: white; font-size: 2rem; font-weight: 700; transition: color 0.3s; }
+        .next-link span { display: block; font-size: 0.9rem; color: var(--accent-turquoise); font-weight: 400; margin-bottom: 10px; font-family: monospace;}
+        .next-link:hover { color: var(--accent-turquoise); }
+
+        @media (max-width: 768px) { 
+            .content-grid { grid-template-columns: 1fr; gap: 30px; } 
+            .gallery-masonry { column-count: 1; } /* Auf Handy nur 1 Spalte */
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from {transform:scale(0.9); opacity: 0;} to {transform:scale(1); opacity: 1;} }
+    </style>
+</head>
+<body>
+    <div class="project-hero">
+
+
+        <a href="../index.html#work" class="back-btn">← Zurück zur Übersicht</a>
+        
+
+
+        <h1 class="project-title">Tageslicht</h1>
+        
+
+
+        <div class="project-meta">
+            <div class="meta-item">
+                <span class="meta-label">TYP</span>
+                <span>Musikvideo</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">KUNDE / KONTEXT</span>
+                <span>Hobbyprojekt</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">ROLLE</span>
+                <span>Musikvideo & Part</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">TOOLS</span>
+                <span>Premiere, Aftereffects & Davinci</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">ZEITRAUM</span>
+                <span>10 Tage (3 Drehtage, 7 Post)</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">WANN</span>
+                <span>Dezember 2025</span>
+            </div>
+        </div>
+
+
+        <!-- HAUPTVIDEO -->
+        <div class="media-showcase">
+            <iframe src="https://www.youtube.com/watch?v=p9kBrwZJ1i4&list=RDp9kBrwZJ1i4&start_radio=1" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+
+        <!-- BESCHREIBUNG -->
+        <div class="content-grid">
+            <div class="text-block">
+                <h1 class="project-title">Songtext</h1>
+                <h2>Das Kernmotiv des Songs: Angst vor Vergänglichkeit</h2>
+                <p>Das Lied beschreibt ein Gefühl welches zwischen tiefer Verbundenheit und schmerzhafter Distanz schwankt. Das lyrische Ich steckt im Teufelskreis aus Fehlern und der Suche nach Halt fest. Es herrscht eine "Carpe Diem"-Stimmung unter negativen Vorzeichen: Man genießt den Moment (Sekt im Bett), obwohl man weiß, dass er nicht von Dauer ist.</p>
+            </div>
+            <div class="text-block">
+                <h2>Der innere Konflikt</h2>
+                <p>Ein zentrales Thema ist die Überforderung. Die Zeile „mein herz ist leise, kopf ist laut“ beschreibt einen Zustand von Overthinking und emotionaler Taubheit. Das lyrische Ich kämpft mit Schuldgefühlen („hab dich oft verletzt“), kann aber gleichzeitig nicht allein sein. Das lyrische ich ist zwar reflektiert:"und wenn ich heut nicht kein komme tut es mir leid, und wenn ich mich nicht melde weißt du trotzdem bescheid. Denn ich hab so viele fehler" aber durch diese nachrricht die als direkte anrede an das lyrische du gemeint ist, merken wir dass sich das lyrische Ich trotz dieser Reflektion keine Verhaltensänderung verspricht. Das präventive Entschuldigen für zukünftiges Fehlferhalten könnte hier als kapitulation vor den eigenen Fehlern vertanden werden.</p>
+            </div>
+            <div class="text-block">
+                <h2>Die Dynamik der Beziehung</h2>
+                <p>Die Beziehung wirkt fragil. Es wird nicht über die Zukunft gesprochen („ich frag dich nicht ich wag das nicht“), weil die Antwort vermutlich das Ende bedeuten würde. Es ist eine Flucht vor der Realität, untermalt von Symbolen wie dem "schlechten Sekt". Es muss nicht perfekt sein, solange man nicht allein ist. Die Angst vor Verlust und Konfrontation, dass sich das lyrische ich der Wahrheit ("Tageslicht, ich wart auf dich" das Tageslicht ist hier als Symbol für Wahrheit und Klarheit zu verstehen") welche es sich wünscht nicht stellen kann. Die Nacht schützt die Illusion aber das "warten" zeigt das starke Bedürfnis nach klarheit trotz der Ängste und dem Schmerz welcher damit verbunden ist. Der Abschnitt:„wir trinken sekt / Der garnicht schmeckt in meinem bett / Das alles nicht so deep“ zeigt darüber hinaus "wir tun so als wäre das hier bedeutungslos um uns selbst vor der Erkenntnis zu schützen wie sehr wir einander brauchen"</p>
+            </div>
+            <div class="text-block">
+                <h2>Aussage</h2>
+                <p>Der Text ist selbstzerstörerich und bleibt gleichzeitig hoffnungsvoll, von dieser Spannung lebt die Stimmung des Songs, eine Art Fegefeuer zwischen dem Bedürfnis nach Liebe und Autentizität. Das lyrische ich ist hin und her gerissen zwischen diesen beiden Polen und bekommt deswegen keins von beiden wirklich. Dieser innere Konflikt wird im Alltag verdrängt und äußert sich dann stellvertretend durch das im Song beschriebene Fehlverhalten welches das lyrische Du immerwieder verletzt. Es ist ein moderner Lovesong für Menschen die keine Kraft mehr für das Gewicht von wahrer Liebe haben aber dennoch nicht aufgegeben diese zu suchen.  </p>
+            </div>
+
+            <div class="text-block">
+                <h1 class="project-title">Musikvideo</h1>
+                <h2>Kulisse</h2>
+                <p>Das Video spielt ausschließlich nachts, in Städtischen Kulissen, Geragen, Seitenstraßen oder an einer Bushaltestelle um die Zeile „Und wenn ich heut nicht heim komm tut es mir leid“ direkt aufzugreifen. Wir sind quasi direkt in der Situation für die sich das Lyrische ich am anfang entschuldigt und wissen somit dass die vorhersage eingetroffen ist. Wir finden hier also direkt zu beginn auf Text und Videoebene die allgemeine Flucht vor der Realität wider. Die Dunkelheit dient als Schutzraum für den „Wahnsinn“ und die Fehler, die im Text gestanden werden. Die Mittelfinger die einer der Protagonisten immer wieder in die Kamera zeigt die Projektion der eigenen Fehler auf das Lyrische du unter welchen dieses immer wieder leidet.</p>
+            </div>
+            <div class="text-block">
+                <h2>Schnitt</h2>
+                <p>Das Video nutzt schnelle Schnitte, körnige Filter cutout-effekte und überlagerung von clips sowie clips mit unterschiedlicher Videoqualität. Es startet langsam mit sich überlagernden Szenen und wird dann mit jeder Strophe immer hektischer und voller bis am Ende wieder eine gewisse Ruhe einkehrt welche auf das kurz bevorstehende Ende der Nacht deutet. Das spiegelt das innere Chaos und "Overthinking" in welchem sich das Lyrische ich befindet. Es wirkt alles ein wenig wie ein Fiebertraum bleibt aber gleichzeitig oberflächlich ästhetisch. Genau wie die Situation mit dem „Sekt, der nicht schmeckt“. Die Bewegenden Hausfassaden am Anfang in Ende des Videos spiegeln die Lebensrealität des Lyrischen Ichs, sich immer wieder ändernd aber trotzdem gleichbleibend. Es steht als symbol für das Gefanngensein in den eigenen Schema.</p>
+            </div>
+            <div class="text-block">
+                <h2>Bezug zum Text</h2>
+                <p>Obwohl der Song "Tageslicht" heißt, sieht man im Video vor allem die flucht in die Nacht. Die wiederholte Hook „Tageslicht ich wart auf dich“ wird im Video durch künstliche Lichtquellen (Straßenlaternen, Scheinwerfer) kontrastiert. Das Video zeigt das „Dazwischen-Sein“: Man ist noch in der Nacht gefangen, wartet aber verzweifelt auf die Erlösung durch den Morgen, welcher gleichzeitig die Trennung bedeutet („ich weiß du bleibst nicht hier“). Weil man sich dem "Tageslicht" (noch) nicht stellen kann aber das bedürfnis nach klarheit hat, sucht man diese in künstlichen Lichtquellen die das Tageslicht zwar imitieren und sich im Kontrast zur Nacht auch nach der Wahrheit anfühlen aber am letzten Endes auch nur eine Flucht vor der Realität sind. Die Mütze die einer der Protagonisten in manchen dieser Szenen vor den Augen hat ist eine Metapher für die Blindheit vor wahrer Erkenntnis und die Angst der Wahrheit und seinen eigenen Gefühlen ins Gesicht zu sehen</p>
+                <p>Das Video zeigt die Momentaufnahme einer Nacht, in der man sich in seinen Fehlern und seiner Sehnsucht verliert, und ist damit mehr eine visuelle Unterstreichung der Textelemente als eine Ergänzung derer.</p>
+            </div>
+
+        </div>
+
+        <!-- BEHIND THE SCENES (MIRO) -->
+      <div class="gallery-section">
+            <h2>Screenshots</h2>
+            
+            <div class="gallery-masonry">
+                
+                        <!-- Bild 1 -->
+                        <div class="gallery-item" onclick="openLightbox(this)">
+                            <img src="../assets/tageslicht/screenshot_1.png" alt="screenshot 1" 
+                                 onerror="this.src='https://placehold.co/600x800/222/FFF?text=screenshot+1'">
+                        </div>
+                                        <!-- Bild 2 -->
+                        <div class="gallery-item" onclick="openLightbox(this)">
+                            <img src="../assets/tageslicht/screenshot_2.png" alt="screenshot 2" 
+                                    onerror="this.src='https://placehold.co/600x800/222/FFF?text=screenshot+2'">
+                        </div>
+                                        <!-- Bild 3 -->
+                        <div class="gallery-item" onclick="openLightbox(this)">
+                            <img src="../assets/tageslicht/screenshot_3.png" alt="screenshot 3" 
+                                 onerror="this.src='https://placehold.co/600x800/222/FFF?text=screenshot+3'">
+                        </div>
+                                        <!-- Bild 4 -->
+                        <div class="gallery-item" onclick="openLightbox(this)">
+                            <img src="../assets/tageslicht/screenshot_4.png" alt="screenshot 4" 
+                                    onerror="this.src='https://placehold.co/600x800/222/FFF?text=screenshot+4'">
+                        </div>
+                                        <!-- Bild 5 -->
+                        <div class="gallery-item" onclick="openLightbox(this)">
+                            <img src="../assets/tageslicht/screenshot_5.png" alt="screenshot 5" 
+                                 onerror="this.src='https://placehold.co/600x800/222/FFF?text=screenshoy+5'">
+                        </div>
+                                         <!-- Bild 6 -->
+                        <div class="gallery-item" onclick="openLightbox(this)">
+                             <img src="../assets/tageslicht/screenshot_6.png" alt="screenshot 6" 
+                                onerror="this.src='https://placehold.co/600x800/222/FFF?text=screenshoy+6'">
+                        </div>
+                                         <!-- Bild 7 -->
+                        <div class="gallery-item" onclick="openLightbox(this)">
+                            <img src="../assets/tageslicht/screenshot_7.png" alt="screenshot 7" 
+                                onerror="this.src='https://placehold.co/600x800/222/FFF?text=screenshoy+7'">
+                        </div>
+            </div>
+            
+            <p style="opacity: 0.6; font-size: 0.9rem; margin-top: 10px;">Klicke auf die Bilder für eine Detailansicht.</p>
+        </div>
+        
+        <div class="next-project">
+            <a href="campus-wg.html" class="next-link">
+                <span>Nächstes Projekt</span>
+                Campus WG →
+            </a>
+        </div>
+
+         <!-- LIGHTBOX CONTAINER -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script>
+        // Einfaches Script für die Lightbox
+        function openLightbox(element) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const clickedImg = element.querySelector('img');
+            
+            lightbox.style.display = "flex";
+            lightboxImg.src = clickedImg.src;
+            // Scrollen deaktivieren wenn Lightbox offen ist
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = "none";
+            // Scrollen wieder aktivieren
+            document.body.style.overflow = "auto";
+        }
+
+        // Schließen mit ESC Taste
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeLightbox();
+            }
+        });
+    </script>
+        
+    </div>
+</body>
+</html>
