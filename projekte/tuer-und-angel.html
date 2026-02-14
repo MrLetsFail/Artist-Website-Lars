@@ -24,85 +24,291 @@
         
         /* Text Grid */
         .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-bottom: 80px; }
-        .text-block h2 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent-yellow); }
+        .text-block h2 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent-turquoise); }
         .text-block p { font-size: 1.1rem; line-height: 1.8; opacity: 0.9; margin-bottom: 20px; }
         
-        /* Highlight Box für One Shot Info */
-        .highlight-box {
-            grid-column: span 2;
-            background: rgba(255, 223, 60, 0.05);
-            border: 1px solid var(--accent-yellow);
-            padding: 30px;
-            border-radius: 8px;
-            margin-top: 20px;
+        /* PINTEREST STYLE GALLERY */
+        .gallery-section h2 { font-size: 1.5rem; margin-bottom: 30px; color: var(--accent-yellow); }
+        
+        .gallery-masonry {
+            column-count: 2; /* 2 Spalten Standard */
+            column-gap: 20px;
         }
-        .highlight-box h3 { color: var(--accent-yellow); margin-bottom: 10px; font-size: 1.2rem; }
-        .highlight-box p { margin-bottom: 0; font-size: 1rem; opacity: 0.8; }
+        
+        .gallery-item {
+            break-inside: avoid; /* Verhindert, dass Bilder in der Mitte durchgeschnitten werden */
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: zoom-in;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            filter: brightness(1.1);
+        }
+
+        /* LIGHTBOX (Vollbild Ansicht) */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 4px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-lightbox:hover { color: var(--accent-pink); }
 
         .next-project { padding: 50px 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: right; }
         .next-link { text-decoration: none; color: white; font-size: 2rem; font-weight: 700; transition: color 0.3s; }
-        .next-link span { display: block; font-size: 0.9rem; color: var(--accent-pink); font-weight: 400; margin-bottom: 10px; font-family: monospace;}
-        .next-link:hover { color: var(--accent-pink); }
+        .next-link span { display: block; font-size: 0.9rem; color: var(--accent-turquoise); font-weight: 400; margin-bottom: 10px; font-family: monospace;}
+        .next-link:hover { color: var(--accent-turquoise); }
 
         @media (max-width: 768px) { 
             .content-grid { grid-template-columns: 1fr; gap: 30px; } 
-            .highlight-box { grid-column: span 1; }
+            .gallery-masonry { column-count: 1; } /* Auf Handy nur 1 Spalte */
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from {transform:scale(0.9); opacity: 0;} to {transform:scale(1); opacity: 1;} }
     </style>
 </head>
 <body>
     <div class="project-hero">
+
+
         <a href="../index.html#work" class="back-btn">← Zurück zur Übersicht</a>
         
+
+
         <h1 class="project-title">Zwischen Tür und Angel</h1>
+
+
         
         <div class="project-meta">
             <div class="meta-item">
                 <span class="meta-label">TYP</span>
-                <span>Kurzfilm (One-Shot Illusion)</span>
+                <span>Kurzfilm </span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">KUNDE / KONTEXT</span>
+                <span>Nebenprojekt / Freizeit</span>
             </div>
             <div class="meta-item">
                 <span class="meta-label">ROLLE</span>
-                <span>Regie, Drehbuch, Edit, Grading</span>
+                <span>Regie, Konzept, Edit, Grading</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">TOOLS</span>
+                <span>Adobe Premiere</span>
             </div>
             <div class="meta-item">
                 <span class="meta-label">ZEITRAUM</span>
-                <span>4 Tage (1 Dreh, 3 Post)</span>
+                <span>6 Tage (1 Dreh, 2 Post, 3 Grading)</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">WANN</span>
+                <span>Sommer 2025</span>
             </div>
         </div>
+
+
 
         <!-- HAUPTVIDEO -->
         <div class="media-showcase">
             <iframe src="https://www.youtube.com/embed/hWSmRNEUFUs" frameborder="0" allowfullscreen></iframe>
         </div>
 
+
+
         <!-- BESCHREIBUNG -->
         <div class="content-grid">
             <div class="text-block">
-                <h2>Die Handlung</h2>
-                <p>Ein Raum, zwei Türen, kein Ausweg. Die Protagonistin ist in einem physikalisch unmöglichen Loop gefangen: Verlässt sie den Raum durch die eine Tür, betritt sie ihn im selben Moment durch die andere wieder. Selbst Gegenstände folgen dieser Logik – ein aus Frust geworfenes Kissen fliegt durch die Tür und trifft sie selbst von hinten.</p>
-                <p>In völliger Isolation und ohne ein einziges gesprochenes Wort steigert sich ihre Verzweiflung, bis eine zweite Version ihrer selbst den Raum betritt. Erst durch diese surreale Begegnung bricht die Logik des Raumes: Beide können entkommen, die Türen schließen sich, und der Zyklus wartet auf den nächsten Start.</p>
+                <h2>Idee & Handlung</h2>
+                <p>In dem Kurzfilm geht es um die Protagonistin Melanie welche in einer art Raumzeit Schleife gefangen ist. Um das nochmal zu verdeutlichen gibt es zwischendurch immerwieder einblendungen einer uhr die zwar tickt aber trotzdem nicht weiter läuft. In dem Versuch zu Entkommen landet sie egal was sie macht immer wieder im selben Raum bis sie sich dann am Ende selbst begegnet was die Schleife sowohl auflöst als auch wieder neu startet. Der kurzfilm ist also genau wie der Raum in dem er stattfindet ein in sich geschlossener Kreislauf und die Uhr läuft weiter.</p>
+                <p>Egal wie schnell oder langsam und egal in welche Richtung man sich bewegt, am ende ist man immer wieder mit sich selbst alleine. Diese wahrheit kann beklemmend sein und genau das versucht der Film auf eine abstakte Art und Weise einzufangen. Der wurf mit dem kissen ist der Moment in dem die Protagonistin sich dieser Wahrheit aussetzt und sich darauf einlässt, als sie sich dann tatsächlich mit dem Kissen trifft und das ihre Ängste endgültig bestätigt versucht sie zum ersten mal nicht mehr davor weg zu laufen und stellt sich ihren Gefühlen. In dem Moment in dem sie sich erlaubt sich selbst in ihrem Gefangensein zu erkennen und zu akzeptieren, kommt ihr jüngeres Ich, welches diesen Zyklus noch nicht durchlaufen hat, in den Raum und die Protagonistin kann die Zeitschleife verlassen.</p>
+                <p>Oft kommen wir an Punkte in unserem Leben in denen wir dinge über uns und die Welt erkennen die uns vorher völlig verborgen waren. Wenn wir das erste mal mit solchen Gefühlen oder Ideen in berühung kommen verstehen wir sie oft noch nicht und versuchen diese deshalb zu verdrängen und davor weg zu laufen. In dem Moment in dem wir die Wahrheit nichtmehr fürchten sondern akzeptieren öffnen sich uns jedoch häufig Wege die uns sonst für immer verschlossen geblieben wären und Ängste werden somit nachdem man sich ihnen stellt zu neuen Freiheiten.</p>
             </div>
             <div class="text-block">
                 <h2>Produktion & Herausforderung</h2>
-                <p>Das Konzept der Zeitschleife als Metapher für existenzielle Angst wurde technisch als "Fake One-Shot" umgesetzt. Die Kamera verlässt nie den Raum, es gibt keine sichtbaren Schnitte.</p>
-                <p>Die größte Herausforderung war hierbei das Color Grading (Premiere Pro): Da wir den Raum nicht vollständig abdunkeln konnten, veränderte sich das Tageslicht während des Drehs massiv. Um die Illusion einer einzigen, durchgehenden Aufnahme aufrechtzuerhalten, musste der Look Shot für Shot angeglichen werden.</p>
+                <p>Das Konzept der Zeitschleife als Metapher für existenzielle Angst wurde als "one-shot" umgesetzt auch wenn es Technischgesehen keiner war. Die Kamera verlässt nie den Raum, und es gibt außer den Schnitten zur Uhr nur invisible Cuts.</p>
+                <p>Die größte Herausforderung waren hierbei: <br> das Color Grading (Premiere Pro): <br>Da wir den Raum nicht vollständig abdunkeln konnten, veränderte sich das Tageslicht während des Drehs massiv (von Sonnenschein bis Regen war alles dabei). Um die Illusion einer einzigen, durchgehenden Aufnahme aufrechtzuerhalten, musste der Look Shot für Shot aufwändig angeglichen werden was sich vorallem in den Transitions beim aus-und-in-den-Raum-laufen als schwierig erwies. Leider gibt es deshalb aber im laufe des Videos trozdem einen leichten Farbwechsel was besondes am Ende des Videos zu sehen ist wenn das Colorgrading sich wieder langsam an die erste Szene angleicht.</p>
+                <p>Die invisible Cuts (Premiere Pro):<br>Abseits vom Colorgrading waren die meisten Transitions teschnich relativ leicht durch Masking umsetzbar, die schnitte sind alle die maskenpfade sind alle sowohl händisch gesetzt als auch getrackt, hierfür würde ich in zukunft vermutlich ein object-tracking tool verwenden und die Feinheiten nochmal selbst nachgehen. Eine der Szenen die aufwendiger waren war der letzte Shot indem die Protagonistin mit sich selbst im Raum steht. Hier mussten wir das Timing so wie die Position gut planen damit die beide gleichzeitig den Raum verlassen und im video die Augen auf der gleichen Achse liegen, ich bin sehr froh damit wie diese Szene geworden ist da sie auch die Wichtigste im Film ist. Die andere Szene welche Technisch etwas schwieriger umzusetzten war als gedacht war die Szene mit dem Kissen. Da wir hierfür leider keine zwei identischen Kissen zur verfügung hatten musste die Schauspielerin nach dem Wurf in der Position verharren wärend jemand anderes mit dem Kissen um sie herum in den anderen Raum gelaufen ist und sie dann wieder damit abgeworgfen hat. Vielleicht hätte es hierfür auch noch eine bessere Lösung gegeben aber mir ist keine eingefallen. Da die Schauspielerin sich natürlich trotzdem ein bisschen bewegt hat war es relativ knifflig die Szene in dem das Kissen an ihr abprallt sauber zu schneiden ohne dass man Kanten oder ähnliches sieht.</p>
+            </div>
+            <div class="text-block">
+                <p>bts oder anderes zusatzmaterial wie Storyboard gibt es bei diesem Projekt keins weil keins benötigt wurde und der Drehaufwand ziemlich überschaubar war. </p>
             </div>
 
-            <!-- TECH HIGHLIGHT -->
-            <div class="highlight-box">
-                <h3>Technical Insight: Der "Invisible Cut"</h3>
-                <p>Das Auftauchen des Doppelgängers im selben Kamerabild erforderte präzise Planung. Da es sich um eine One-Shot-Illusion handelt, wurden die Übergänge zwischen den Takes "unsichtbar" maskiert. Timing am Set war essenziell, damit die Bewegungen der Schauspielerin nahtlos in ihre eigene "Vergangenheit" übergehen.</p>
-            </div>
+
         </div>
 
+
+  <!-- BEHIND THE SCENES (MIRO) -->
+  <div class="gallery-section">
+    <h2>Behind the Scenes: Planung</h2>
+    
+    <div class="gallery-masonry">
+        
+                        <!-- Bild 1 -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_1.png" alt="Miro Board Planung" 
+                 onerror="this.src='https://placehold.co/600x800/222/FFF?text=Miro+Board+Shot+1'">
+        </div>
+        
+                        <!-- Bild 2 -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_2.png" alt="Set Aufbau" 
+                 onerror="this.src='https://placehold.co/600x400/222/FFF?text=Set+Aufbau+Pfanne'">
+        </div>
+
+                        <!-- Bild 3  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_3.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 4  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_4.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 5  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_5.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 6  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_6.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 7  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_7.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 8 -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_8.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 9 -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_9.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 10  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_10.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 11  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_11.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+        
+                        <!-- Bild 12  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_12.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 13  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_13.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+
+                        <!-- Bild 14  -->
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../assets/dexter/miro_14.png" alt="Farbcodierung" 
+                 onerror="this.src='https://placehold.co/600x700/222/FFF?text=Drehplan+Farbcodes'">
+        </div>
+    </div>
+    
+    <p style="opacity: 0.6; font-size: 0.9rem; margin-top: 10px;">Klicke auf die Bilder für eine Detailansicht.</p>
+</div>
         <div class="next-project">
-            <a href="life-mp4.html" class="next-link">
+            <a href="ort-voller-leben.html" class="next-link">
                 <span>Nächstes Projekt</span>
-                Life.mp4 →
+                ein Ort voller Leben →
             </a>
         </div>
+
+    <!-- LIGHTBOX CONTAINER -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script>
+        // Einfaches Script für die Lightbox
+        function openLightbox(element) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const clickedImg = element.querySelector('img');
+            
+            lightbox.style.display = "flex";
+            lightboxImg.src = clickedImg.src;
+            // Scrollen deaktivieren wenn Lightbox offen ist
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = "none";
+            // Scrollen wieder aktivieren
+            document.body.style.overflow = "auto";
+        }
+
+        // Schließen mit ESC Taste
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeLightbox();
+            }
+        });
+    </script>
     </div>
 </body>
 </html>
